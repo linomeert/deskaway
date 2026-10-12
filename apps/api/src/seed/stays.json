@@ -1,0 +1,451 @@
+[
+  {
+    "id": "ghent-patershol-loft",
+    "name": "Patershol canal loft",
+    "city": "Ghent",
+    "country": "BE",
+    "description": "A quiet top-floor loft in the old Patershol quarter. The desk faces the canal and has a 27-inch monitor; fibre wifi reaches every corner.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Double-height living room with tall windows"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Desk with a monitor, laptop and desk lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&auto=format&fit=crop&q=80",
+        "alt": "White kitchen with an island and bar stools"
+      }
+    ],
+    "pricePerNight": 11500,
+    "cleaningFee": 4500,
+    "cityTaxPerPersonPerNight": 300,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 250,
+    "wifiUploadMbps": 50,
+    "wifiMeasuredDaysAgo": 6,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 400
+  },
+  {
+    "id": "ghent-dok-noord-studio",
+    "name": "Dok Noord studio",
+    "city": "Ghent",
+    "country": "BE",
+    "description": "A compact studio in a converted dockside warehouse. There is a small desk by the window and a coworking space in the same building complex.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Green velvet sofa against a white wall"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1486946255434-2466348c2166?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Small desk nook with a yellow chair and lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bed with a small bedside table and lamp"
+      }
+    ],
+    "pricePerNight": 7500,
+    "cleaningFee": 3000,
+    "cityTaxPerPersonPerNight": 300,
+    "maxGuests": 1,
+    "wifiDownloadMbps": 120,
+    "wifiUploadMbps": 20,
+    "wifiMeasuredDaysAgo": 21,
+    "workspaceType": "desk",
+    "coworkingDistanceM": 150
+  },
+  {
+    "id": "antwerp-zurenborg-apartment",
+    "name": "Zurenborg Art Nouveau apartment",
+    "city": "Antwerp",
+    "country": "BE",
+    "description": "A high-ceilinged apartment on a leafy Zurenborg street with a separate study you can close the door on. Good for video calls all day.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with a blue sofa and a herringbone floor"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Green home office with a desk and plants"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bedroom with an orange painting and two ottomans"
+      }
+    ],
+    "pricePerNight": 12500,
+    "cleaningFee": 5000,
+    "cityTaxPerPersonPerNight": 300,
+    "maxGuests": 3,
+    "wifiDownloadMbps": 300,
+    "wifiUploadMbps": 60,
+    "wifiMeasuredDaysAgo": 12,
+    "workspaceType": "office",
+    "coworkingDistanceM": 1200
+  },
+  {
+    "id": "antwerp-eilandje-studio",
+    "name": "Eilandje harbour studio",
+    "city": "Antwerp",
+    "country": "BE",
+    "description": "A bright studio near the MAS with a dining table that doubles as a desk. The harbour can get busy on weekend evenings.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Open-plan living and dining area with a red armchair"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Laptop and notebook on a round table"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&auto=format&fit=crop&q=80",
+        "alt": "White bedroom with a bench by the window"
+      }
+    ],
+    "pricePerNight": 8900,
+    "cleaningFee": 3500,
+    "cityTaxPerPersonPerNight": 300,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 80,
+    "wifiUploadMbps": 15,
+    "wifiMeasuredDaysAgo": 44,
+    "workspaceType": "desk",
+    "coworkingDistanceM": 600
+  },
+  {
+    "id": "brussels-ixelles-garden-flat",
+    "name": "Ixelles garden flat",
+    "city": "Brussels",
+    "country": "BE",
+    "description": "A ground-floor flat with a private garden, close to Place Flagey. The desk has an external monitor and an ergonomic chair.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with a grey sofa, plants and wooden shelves"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Desktop computer on a desk by the window"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Kitchen with dark cabinets and a marble counter"
+      }
+    ],
+    "pricePerNight": 10500,
+    "cleaningFee": 4500,
+    "cityTaxPerPersonPerNight": 400,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 200,
+    "wifiUploadMbps": 40,
+    "wifiMeasuredDaysAgo": 9,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 350
+  },
+  {
+    "id": "brussels-sainte-catherine-studio",
+    "name": "Sainte-Catherine budget studio",
+    "city": "Brussels",
+    "country": "BE",
+    "description": "A small, central studio above the bars of Sainte-Catherine. Cheap and lively; wifi is basic and fine for email, less so for big uploads.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Yellow armchair next to a floor lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=1200&auto=format&fit=crop&q=80",
+        "alt": "White table and chair by a window"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1616593969747-4797dc75033e?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Balcony with string lights, plants and lounge chairs"
+      }
+    ],
+    "pricePerNight": 5500,
+    "cleaningFee": 2500,
+    "cityTaxPerPersonPerNight": 400,
+    "maxGuests": 1,
+    "wifiDownloadMbps": 45,
+    "wifiUploadMbps": 8,
+    "wifiMeasuredDaysAgo": 53,
+    "workspaceType": "desk",
+    "coworkingDistanceM": 1500
+  },
+  {
+    "id": "leuven-vaartkom-apartment",
+    "name": "Vaartkom canal-side apartment",
+    "city": "Leuven",
+    "country": "BE",
+    "description": "A new apartment by the Vaartkom basin, a short walk from the station. The desk has a monitor and a height-adjustable top.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with a pink chair, shelves and plants"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Desk with a monitor, keyboard and office chair"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bedroom with a tufted headboard and grey bedding"
+      }
+    ],
+    "pricePerNight": 8500,
+    "cleaningFee": 3500,
+    "cityTaxPerPersonPerNight": 250,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 150,
+    "wifiUploadMbps": 30,
+    "wifiMeasuredDaysAgo": 3,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 900
+  },
+  {
+    "id": "bruges-canal-house",
+    "name": "Bruges canal house",
+    "city": "Bruges",
+    "country": "BE",
+    "description": "A whole canal house for a small team, with a study on the first floor. Thick old walls keep it quiet, but the wifi is modest.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with a white sofa and blue cushions"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Minimal wooden desk with a lamp and chair"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Corner with a black sofa and a white chest of drawers"
+      }
+    ],
+    "pricePerNight": 14500,
+    "cleaningFee": 5500,
+    "cityTaxPerPersonPerNight": 350,
+    "maxGuests": 4,
+    "wifiDownloadMbps": 60,
+    "wifiUploadMbps": 10,
+    "wifiMeasuredDaysAgo": 37,
+    "workspaceType": "office",
+    "coworkingDistanceM": 2500
+  },
+  {
+    "id": "amsterdam-jordaan-apartment",
+    "name": "Jordaan canal apartment",
+    "city": "Amsterdam",
+    "country": "NL",
+    "description": "A canal-view apartment in the Jordaan with fast fibre and a monitor desk by the window. Popular, so it books up early.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Light living room with large windows"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Laptop on a counter by a large window"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with grey sofas and a pendant lamp"
+      }
+    ],
+    "pricePerNight": 18000,
+    "cleaningFee": 6000,
+    "cityTaxPerPersonPerNight": 750,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 500,
+    "wifiUploadMbps": 100,
+    "wifiMeasuredDaysAgo": 15,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 300
+  },
+  {
+    "id": "amsterdam-noord-loft",
+    "name": "Amsterdam-Noord studio loft",
+    "city": "Amsterdam",
+    "country": "NL",
+    "description": "An industrial loft near the NDSM wharf with a closed office room. Free ferry to Centraal in ten minutes.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1554995207-c18c203602cb?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with an orange leather sofa and plants"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Laptop on a wooden desk under a warm lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Open-plan living room with a wooden accent wall"
+      }
+    ],
+    "pricePerNight": 13500,
+    "cleaningFee": 5000,
+    "cityTaxPerPersonPerNight": 750,
+    "maxGuests": 3,
+    "wifiDownloadMbps": 350,
+    "wifiUploadMbps": 80,
+    "wifiMeasuredDaysAgo": 27,
+    "workspaceType": "office",
+    "coworkingDistanceM": 700
+  },
+  {
+    "id": "utrecht-wittevrouwen-townhouse",
+    "name": "Wittevrouwen townhouse",
+    "city": "Utrecht",
+    "country": "NL",
+    "description": "A family townhouse on a quiet street with a home office in the attic. Bikes included; the centre is five minutes away.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Sunny living room with a gallery wall and plants"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Desk with a monitor, keyboard and office chair"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=1200&auto=format&fit=crop&q=80",
+        "alt": "White bedroom with a bench by the window"
+      }
+    ],
+    "pricePerNight": 12000,
+    "cleaningFee": 5000,
+    "cityTaxPerPersonPerNight": 500,
+    "maxGuests": 4,
+    "wifiDownloadMbps": 200,
+    "wifiUploadMbps": 40,
+    "wifiMeasuredDaysAgo": 18,
+    "workspaceType": "office",
+    "coworkingDistanceM": 1100
+  },
+  {
+    "id": "rotterdam-kop-van-zuid-apartment",
+    "name": "Kop van Zuid high-rise apartment",
+    "city": "Rotterdam",
+    "country": "NL",
+    "description": "A 20th-floor apartment with skyline views and a monitor desk. The building has a shared work lounge on the ground floor.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with a fireplace and built-in shelves"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Desktop computer on a desk by the window"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&auto=format&fit=crop&q=80",
+        "alt": "White kitchen with an island and bar stools"
+      }
+    ],
+    "pricePerNight": 11000,
+    "cleaningFee": 4000,
+    "cityTaxPerPersonPerNight": 450,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 400,
+    "wifiUploadMbps": 100,
+    "wifiMeasuredDaysAgo": 8,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 500
+  },
+  {
+    "id": "luxembourg-grund-apartment",
+    "name": "Grund riverside apartment",
+    "city": "Luxembourg City",
+    "country": "LU",
+    "description": "A stone apartment by the Alzette in the Grund, with a lift up to the old town. The desk has a monitor and looks out over the river.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bright lounge with white chairs and a floor lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Laptop on a counter by a large window"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bedroom with a tufted headboard and grey bedding"
+      }
+    ],
+    "pricePerNight": 16500,
+    "cleaningFee": 6000,
+    "cityTaxPerPersonPerNight": 300,
+    "maxGuests": 2,
+    "wifiDownloadMbps": 300,
+    "wifiUploadMbps": 60,
+    "wifiMeasuredDaysAgo": 31,
+    "workspaceType": "desk_monitor",
+    "coworkingDistanceM": 1800
+  },
+  {
+    "id": "durbuy-forest-cabin",
+    "name": "Durbuy forest cabin",
+    "city": "Durbuy",
+    "country": "BE",
+    "description": "A wooden cabin at the edge of the forest. Very quiet, but the wifi is a 4G router: fine for email and calls, slow for large files.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1501183638710-841dd1904471?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Attic living room with a fireplace and wooden beams"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Laptop on a wooden desk under a warm lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bed with a small bedside table and lamp"
+      }
+    ],
+    "pricePerNight": 9500,
+    "cleaningFee": 4000,
+    "cityTaxPerPersonPerNight": 150,
+    "maxGuests": 4,
+    "wifiDownloadMbps": 30,
+    "wifiUploadMbps": 5,
+    "wifiMeasuredDaysAgo": 58,
+    "workspaceType": "desk"
+  },
+  {
+    "id": "la-roche-ourthe-chalet",
+    "name": "Ourthe valley chalet",
+    "city": "La Roche-en-Ardenne",
+    "country": "BE",
+    "description": "A chalet above the Ourthe with a separate office and a view over the valley. Weekly stays only, for people who want a proper retreat.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Living room with grey sofas and a pendant lamp"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Minimal wooden desk with a lamp and chair"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&auto=format&fit=crop&q=80",
+        "alt": "Bedroom with an orange painting and two ottomans"
+      }
+    ],
+    "pricePerNight": 11500,
+    "cleaningFee": 5000,
+    "cityTaxPerPersonPerNight": 150,
+    "minNights": 7,
+    "maxGuests": 6,
+    "wifiDownloadMbps": 50,
+    "wifiUploadMbps": 8,
+    "wifiMeasuredDaysAgo": 24,
+    "workspaceType": "office"
+  }
+]

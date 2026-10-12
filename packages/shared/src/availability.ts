@@ -7,6 +7,12 @@ export function nightsBetween(checkIn: string, checkOut: string): number {
   return Math.round((Date.parse(checkOut) - Date.parse(checkIn)) / MS_PER_DAY);
 }
 
+export function addDays(isoDate: string, days: number): string {
+  return new Date(Date.parse(isoDate) + days * MS_PER_DAY)
+    .toISOString()
+    .slice(0, 10);
+}
+
 // YYYY-MM-DD strings sort chronologically, so string comparison is date comparison.
 export function isBookableFrom(checkIn: string, today: string): boolean {
   return checkIn >= today;
@@ -21,4 +27,17 @@ export function isAvailable(
   return bookings.every(
     (booking) => !(checkIn < booking.checkOut && booking.checkIn < checkOut),
   );
+}
+
+// Nights in [from, to) that are taken; check-out days are free.
+export function blockedNights(
+  bookings: readonly DateRange[],
+  from: string,
+  to: string,
+): string[] {
+  const blocked: string[] = [];
+  for (let night = from; night < to; night = addDays(night, 1)) {
+    if (!isAvailable(bookings, night, addDays(night, 1))) blocked.push(night);
+  }
+  return blocked;
 }

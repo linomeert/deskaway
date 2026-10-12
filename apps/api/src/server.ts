@@ -19,10 +19,25 @@ const app = await buildApp({
     : undefined,
 });
 
+// Render sends SIGTERM on every deploy: stop accepting connections, let
+// in-flight requests finish, and force-exit if that takes too long.
+const SHUTDOWN_TIMEOUT_MS = 10_000;
+
 const signals: NodeJS.Signals[] = ["SIGINT", "SIGTERM"];
 for (const signal of signals) {
   process.once(signal, () => {
-    void app.close().then(() => process.exit(0));
+    app.log.info({ signal }, "shutting down");
+    setTimeout(() => {
+      app.log.error("shutdown timed out, forcing exit");
+      process.exit(1);
+    }, SHUTDOWN_TIMEOUT_MS).unref();
+    app.close().then(
+      () => process.exit(0),
+      (error: unknown) => {
+        app.log.error(error, "shutdown failed");
+        process.exit(1);
+      },
+    );
   });
 }
 
