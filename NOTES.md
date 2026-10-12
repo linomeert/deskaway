@@ -53,6 +53,11 @@ Pricing, availability and work score must be computed the same way everywhere, a
 - **Single deployable.** In production Fastify serves both the API and the built web app (with SPA fallback), so it's one process, one port, and no CORS. In dev, Vite proxies `/api` for the same single-origin setup.
 - **No Turborepo/Nx.** With three small packages, task caching isn't worth the setup cost. I'd revisit it if CI got slow or the package count grew.
 
+### 2026-10-12: Deploy to Render as one web service
+- Decision: one Render service runs Fastify, which serves both the API and the built web app.
+- Why: one URL and no CORS; the in-memory data needs a single long-running process, so the API cannot be split into serverless functions or several instances.
+- Tradeoff: the free tier sleeps when idle, so the first request after a pause is slow.
+
 
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.
@@ -63,6 +68,18 @@ Pricing, availability and work score must be computed the same way everywhere, a
 - City tax: per person per night, a flat amount per city.
 - Money is stored in integer euro cents and rounded once per line.
 - The server rejects overlapping bookings with 409; a broken rule gets 422.
+- quote() only does price. "Check-in in the past" is checked in availability.ts (isBookableFrom).
+- quote() doesn't throw. It returns available: false + a reason code.
+- Codes: INVALID_DATES, MIN_NIGHTS, MAX_GUESTS. The UI writes the text.
+- If more rules break, the first wins: INVALID_DATES → MIN_NIGHTS → MAX_GUESTS.
+- Price lines: { kind, amount }. Labels are done in the UI.
+- Bad input (like 0 guests) is caught by Zod → 400. quote() only checks business rules.
+- Shared tests run in Europe/Amsterdam time, otherwise the clock-change test is useless in CI (UTC).
+- Past check-in → reason code CHECK_IN_IN_PAST (422).
+- API order: past check-in → quote rules → overlap (409).
+- isAvailable only checks dates; guests are checked in quote.
+- Work score details: wifi linear 0-100 Mbps (capped), workspace office 25 / desk_monitor 20 / desk 15, noise from average review rating (no reviews = half points), coworking linear 0-5 km (none nearby = 0).
+- nightsBetween uses UTC midnight, so clock changes don't affect the count.
 
 
 ## Assumptions
