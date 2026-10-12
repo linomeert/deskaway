@@ -1,0 +1,37 @@
+{
+  "name": "deskaway",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "packages/shared"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"npm run dev -w @deskaway/api\" \"npm run dev -w @deskaway/web\"",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && npm run typecheck --workspaces",
+    "test": "vitest run",
+    "build": "npm run build -w @deskaway/web && npm run build -w @deskaway/api",
+    "start": "node apps/api/dist/server.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "concurrently": "^10.0.6",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^4.1.11"
+  }
+}
