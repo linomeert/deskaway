@@ -65,3 +65,17 @@ export function Input({ className, ...props }: ComponentProps<"input">) {
     />
   );
 }
+
+export function Select({ className, ...props }: ComponentProps<"select">) {
+  return (
+    <select
+      className={cx(
+        "h-11 w-full rounded-md border border-muted bg-surface px-3 text-base text-ink",
+        "aria-invalid:border-2 aria-invalid:border-danger",
+        "disabled:cursor-not-allowed disabled:bg-surface-alt disabled:text-muted",
+        className,
+      )}
+      {...props}
+    />
+  );
+}

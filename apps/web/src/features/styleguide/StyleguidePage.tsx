@@ -2,10 +2,14 @@ import { type ReactNode, useState } from "react";
 import { Badge } from "../../components/Badge";
 import { Button, type ButtonVariant } from "../../components/Button";
 import { Card } from "../../components/Card";
+import { ChipButton, ChipRadio } from "../../components/Chip";
+import { ChipMenu } from "../../components/ChipMenu";
 import { Dialog } from "../../components/Dialog";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
-import { Field, Input } from "../../components/Field";
+import { Field, Input, Select } from "../../components/Field";
+import { SlidersIcon, SortIcon } from "../../components/icons";
+import { SearchPill } from "../../components/SearchPill";
 import { Skeleton } from "../../components/Skeleton";
 import { WifiSpeed } from "../../components/WifiSpeed";
 import { WorkScoreBadge } from "../../components/WorkScoreBadge";
@@ -121,7 +125,94 @@ function FieldsSection() {
         <Field label="City" hint="Disabled">
           {(control) => <Input {...control} disabled defaultValue="Ghent" />}
         </Field>
+        <Field label="Where" hint="Select">
+          {(control) => (
+            <Select {...control} defaultValue="Ghent">
+              <option value="">Anywhere</option>
+              <option>Ghent</option>
+              <option>Antwerp</option>
+            </Select>
+          )}
+        </Field>
       </div>
+    </Section>
+  );
+}
+
+const WORKSPACES = ["Any", "Desk", "Desk + monitor", "Office"];
+
+const SORTS = [
+  { value: "workScore", label: "Work score" },
+  { value: "priceAsc", label: "Price per day" },
+];
+
+function ChipsSection() {
+  const [wifi, setWifi] = useState(true);
+  const [workspace, setWorkspace] = useState("Desk + monitor");
+  const [sort, setSort] = useState("workScore");
+
+  return (
+    <Section title="Chip">
+      <Row label="ChipButton: toggle (aria-pressed) and plain action">
+        <ChipButton
+          pressed={wifi}
+          onClick={() => {
+            setWifi(!wifi);
+          }}
+        >
+          Wifi 100+
+        </ChipButton>
+        <ChipButton icon={<SlidersIcon className="size-4" />}>
+          Filters
+        </ChipButton>
+      </Row>
+      <Row label="ChipMenu: menu button with radio items (arrows, Home/End, Esc)">
+        <ChipMenu
+          label="Sort"
+          icon={<SortIcon className="size-4" />}
+          value={sort}
+          options={SORTS}
+          onChange={setSort}
+        />
+      </Row>
+      <fieldset className="flex flex-col gap-2">
+        <legend className="mb-2 text-sm font-semibold text-muted">
+          ChipRadio: single choice, arrow keys move
+        </legend>
+        <div className="flex flex-wrap gap-2">
+          {WORKSPACES.map((option) => (
+            <ChipRadio
+              key={option}
+              name="styleguide-workspace"
+              label={option}
+              checked={workspace === option}
+              onChange={() => {
+                setWorkspace(option);
+              }}
+            />
+          ))}
+        </div>
+      </fieldset>
+    </Section>
+  );
+}
+
+function SearchPillSection() {
+  const [clicks, setClicks] = useState(0);
+
+  return (
+    <Section title="SearchPill">
+      <Row label="Three segments from sm up, two lines on mobile">
+        <SearchPill
+          where="Ghent"
+          when="2–16 Nov"
+          who="1 guest"
+          onClick={() => {
+            setClicks(clicks + 1);
+          }}
+        />
+        <span className="text-sm text-muted">Clicked {clicks} times</span>
+      </Row>
     </Section>
   );
 }
@@ -218,6 +309,8 @@ export function StyleguidePage() {
 
       <ButtonsSection />
       <FieldsSection />
+      <ChipsSection />
+      <SearchPillSection />
 
       <Section title="Badge">
         <Row label="Tones">

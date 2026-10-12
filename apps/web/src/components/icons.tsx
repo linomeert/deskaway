@@ -76,3 +76,58 @@ export function SpinnerIcon(props: IconProps) {
     </Icon>
   );
 }
+
+interface FillableIconProps extends IconProps {
+  filled?: boolean;
+}
+
+export function HeartIcon({ filled = false, ...props }: FillableIconProps) {
+  return (
+    <Icon fill={filled ? "currentColor" : "none"} {...props}>
+      <path d="M12 20s-7.5-4.6-9.2-9.3C1.6 7.3 3.8 4 7.2 4c2 0 3.6 1.1 4.8 2.8C13.2 5.1 14.8 4 16.8 4c3.4 0 5.6 3.3 4.4 6.7C19.5 15.4 12 20 12 20Z" />
+    </Icon>
+  );
+}
+
+export function StarIcon({ filled = false, ...props }: FillableIconProps) {
+  return (
+    <Icon fill={filled ? "currentColor" : "none"} {...props}>
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
+    </Icon>
+  );
+}
+
+export function SlidersIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
+      <circle cx="16" cy="7" r="2" />
+      <circle cx="8" cy="17" r="2" />
+    </Icon>
+  );
+}
+
+export function SortIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M7 4v16M3 8l4-4 4 4" />
+      <path d="M17 20V4M13 16l4 4 4-4" />
+    </Icon>
+  );
+}
+
+export function ChevronDownIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="m6 9 6 6 6-6" />
+    </Icon>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </Icon>
+  );
+}

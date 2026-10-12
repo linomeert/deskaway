@@ -14,7 +14,10 @@ describe("App", () => {
     renderAt("/");
 
     expect(
-      await screen.findByRole("heading", { level: 1, name: "Deskaway" }),
+      await screen.findByRole("heading", {
+        level: 1,
+        name: "Stays in the Benelux",
+      }),
     ).toBeInTheDocument();
   });
 
