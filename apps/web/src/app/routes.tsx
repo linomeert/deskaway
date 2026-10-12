@@ -19,12 +19,27 @@ function NotFoundPage() {
   );
 }
 
+// Dev only: the import sits behind the DEV check so it is dropped from builds.
+const devRoutes: RouteObject[] = import.meta.env.DEV
+  ? [
+      {
+        path: "styleguide",
+        lazy: async () => {
+          const { StyleguidePage } =
+            await import("../features/styleguide/StyleguidePage");
+          return { Component: StyleguidePage };
+        },
+      },
+    ]
+  : [];
+
 export const routes: RouteObject[] = [
   {
     path: "/",
     element: <App />,
     children: [
       { index: true, element: <HomePage /> },
+      ...devRoutes,
       { path: "*", element: <NotFoundPage /> },
     ],
   },

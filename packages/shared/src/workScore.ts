@@ -50,3 +50,12 @@ export function workScore(
       WEIGHTS.coworking * coworkingFactor(stay.coworkingDistanceM),
   );
 }
+
+export type WorkScoreBand = "excellent" | "good" | "fair";
+
+// Bands for display only; the number is always shown next to the band.
+export function workScoreBand(score: number): WorkScoreBand {
+  if (score >= 80) return "excellent";
+  if (score >= 60) return "good";
+  return "fair";
+}
