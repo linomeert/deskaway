@@ -47,6 +47,13 @@ Deskaway is a booking app for workations: stays in the Benelux for remote worker
 - Decision: Tailwind v4 tokens (navy #153C78, gold #D4A100 for decoration only), base components and a /styleguide page; no design tool.
 - Why: a consistent UI within the timebox.
 
+### 2026-10-12: Monorepo with npm workspaces (web, api, shared).
+Pricing, availability and work score must be computed the same way everywhere, and the server must never trust client prices. Putting those rules in one internal package (`@deskaway/shared`) that both apps import means one source of truth, no copy-pasting and no publishing. npm workspaces give that with one install and one lockfile, and no extra tooling.
+- **Shared ships TypeScript source, no build step.** Vite, tsx, esbuild and Vitest already compile TS, so building shared separately would only add stale-build bugs. If it ever needed to be published, I'd add a build then.
+- **Single deployable.** In production Fastify serves both the API and the built web app (with SPA fallback), so it's one process, one port, and no CORS. In dev, Vite proxies `/api` for the same single-origin setup.
+- **No Turborepo/Nx.** With three small packages, task caching isn't worth the setup cost. I'd revisit it if CI got slow or the package count grew.
+
+
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.
 - Check-in cannot be in the past. `today` is passed in as a parameter, so functions stay pure.
