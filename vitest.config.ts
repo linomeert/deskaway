@@ -26,6 +26,8 @@ export default defineConfig({
           name: "shared",
           root: "./packages/shared",
           environment: "node",
+          // Pin a timezone with DST so date math bugs fail locally and in CI alike.
+          env: { TZ: "Europe/Amsterdam" },
           include: ["src/**/*.test.ts"],
         },
       },
