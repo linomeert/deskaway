@@ -1,14 +1,8 @@
 import { Link, type RouteObject } from "react-router";
-import { App } from "./App";
-
-function HomePage() {
-  return (
-    <>
-      <h1>Deskaway</h1>
-      <p>Workation stays in the Benelux.</p>
-    </>
-  );
-}
+import { SearchPage } from "../features/search/SearchPage";
+import { PlaceholderPage } from "./PlaceholderPage";
+import { Root } from "./Root";
+import { RouteErrorBoundary } from "./RouteErrorBoundary";
 
 function NotFoundPage() {
   return (
@@ -36,9 +30,22 @@ const devRoutes: RouteObject[] = import.meta.env.DEV
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: <Root />,
+    errorElement: <RouteErrorBoundary />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <SearchPage /> },
+      {
+        path: "stays/:id",
+        element: <PlaceholderPage title="Stay details" />,
+      },
+      {
+        path: "checkout/:id",
+        element: <PlaceholderPage title="Confirm and book" />,
+      },
+      {
+        path: "bookings/:id",
+        element: <PlaceholderPage title="Your booking" />,
+      },
       ...devRoutes,
       { path: "*", element: <NotFoundPage /> },
     ],

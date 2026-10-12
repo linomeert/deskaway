@@ -3,6 +3,7 @@
 ## Summary
 
 ## Approach
+| 10-12 | UI/UX & Logo | Used ChatGpt for logo proposals and finetuned in VectorCraft
 
 ## Guardrails
 

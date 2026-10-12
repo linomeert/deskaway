@@ -90,7 +90,7 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Seed bookings are full bookings (fake names, @example.com emails), priced with quote() at startup. Same shape as real bookings.
 ### 2026-10-12: Logo & Design
 - Logo inspiration via ChatGPT & fineturning via VectorCraft (Opensource Adobe Illustrator)
-- No design tool; tokens + base components + style guide route to keep the UI consistent within the timebox
+- Generated wireframes in Claude Code in AirBnb stype in order to save time. Components + style guide generated based on Logo and wireframes in order to respect the timebox.
 
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.
