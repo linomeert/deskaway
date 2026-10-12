@@ -44,7 +44,7 @@ Deskaway is a booking app for workations: stays in the Benelux for remote worker
 - Next: Postgres with an exclusion constraint on (stay_id, date range) to block double bookings at database level.
 
 ### 2026-10-12: Design from tokens, colours from the logo
-- Decision: Tailwind v4 tokens (navy #153C78, gold #D4A100 for decoration only), base components and a /styleguide page; no design tool.
+- Decision: Tailwind v4 tokens (navy #153C78, raspberry #CC5987 as accent (decoration only; #A8396A for accent text)), base components and a /styleguide page; no design tool.
 - Why: a consistent UI within the timebox.
 
 ### 2026-10-12: Monorepo with npm workspaces (web, api, shared).
@@ -88,7 +88,9 @@ Every response has an `x-request-id` header (taken from the request or generated
 - POST /bookings: guest name + email required, company / VAT / note optional. No card data, payment is mocked in the UI (in production Stripe would handle the card, the API only gets a token).
 - Search with dates hides stays that are booked or too small. Stays below the minimum stay are shown with the reason, so the user can change dates.
 - Seed bookings are full bookings (fake names, @example.com emails), priced with quote() at startup. Same shape as real bookings.
-
+### 2026-10-12: Logo & Design
+- Logo inspiration via ChatGPT & fineturning via VectorCraft (Opensource Adobe Illustrator)
+- No design tool; tokens + base components + style guide route to keep the UI consistent within the timebox
 
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.

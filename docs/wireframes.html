@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deskaway wireframes</title>
+<style>
+  :root {
+    --ink: #1f2937; --muted: #6b7280; --line: #dde1e6; --fill: #eceef1;
+    --navy: #153c78; --gold-soft: #f9e8ef; --gold: #cc5987; --note: #2563eb; --bg: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .intro { color: var(--muted); margin: 0 0 28px; max-width: 900px; }
+  section.screen { margin: 0 0 56px; }
+  section.screen > h2 { font-size: 18px; margin: 0 0 4px; }
+  section.screen > p { color: var(--muted); margin: 0 0 12px; }
+  .row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+  .label { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: 6px; }
+  .frame { border: 2px solid var(--ink); border-radius: 12px; padding: 16px; background: #fff; overflow: hidden; }
+  .desktop { width: 920px; max-width: 100%; }
+  .mobile { width: 300px; }
+
+  /* placeholders */
+  .ph { background: var(--fill); border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 12px; position: relative; }
+  .ph.square { aspect-ratio: 1 / 0.95; }
+  .ph.tall { height: 100%; min-height: 120px; }
+
+  /* header + search pill */
+  .hdr { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px;
+    border-bottom: 1px solid var(--line); margin: 0 -16px 14px; padding-left: 16px; padding-right: 16px; }
+  .logo { font-weight: 800; color: var(--navy); font-size: 16px; }
+  .nav { display: flex; gap: 14px; color: var(--ink); font-size: 13px; align-items: center; }
+  .pill { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08); padding: 4px 4px 4px 16px; font-size: 13px; }
+  .pill span.seg { padding: 4px 12px; border-right: 1px solid var(--line); }
+  .pill span.seg:last-of-type { border-right: 0; }
+  .pill .go { width: 30px; height: 30px; border-radius: 999px; background: var(--navy); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; margin-left: 6px; }
+  .seg small { display: block; font-size: 10px; color: var(--muted); }
+
+  /* chips */
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; font-size: 12px; background: #fff; }
+  .chip.on { border: 1.5px solid var(--ink); font-weight: 600; }
+  .spacer { flex: 1; }
+
+  /* cards (no borders, photo first) */
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .card .meta { margin-top: 8px; font-size: 13px; }
+  .card .top { display: flex; justify-content: space-between; font-weight: 600; }
+  .card .sub { color: var(--muted); font-size: 12px; }
+  .heart { position: absolute; top: 8px; right: 8px; font-size: 16px; color: #fff;
+    text-shadow: 0 0 2px #000, 0 0 2px #000; }
+  .heart.on { color: var(--navy); text-shadow: 0 0 2px #fff, 0 0 2px #fff; }
+  .scoretag { position: absolute; top: 8px; left: 8px; background: #fff; border-radius: 999px; padding: 2px 9px;
+    font-size: 11px; font-weight: 700; color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  .dots { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 9px; color: #fff; letter-spacing: 2px; }
+
+  /* generic */
+  .btn { display: inline-block; border: 1px solid var(--ink); border-radius: 8px; padding: 7px 12px; font-size: 13px; background: #fff; font-weight: 600; }
+  .btn.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .btn.block { display: block; text-align: center; }
+  .btn.link { border: 0; padding: 0; text-decoration: underline; font-weight: 600; background: none; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .b { font-weight: 700; }
+  .hr { border-top: 1px solid var(--line); margin: 14px 0; }
+  .note { color: var(--note); font-size: 12px; font-style: italic; margin: 6px 0; }
+  .note::before { content: "\270E  "; font-style: normal; }
+  .states { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .state { border: 1.5px dashed var(--note); border-radius: 10px; padding: 10px; font-size: 12px; }
+  .state .t { font-weight: 700; color: var(--note); margin-bottom: 4px; }
+  .line { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+  .line.total { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 8px; font-weight: 700; }
+  .float { border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,.12); padding: 16px; }
+  .datebox { border: 1px solid var(--ink); border-radius: 8px; overflow: hidden; margin: 10px 0; font-size: 12px; }
+  .datebox .r { display: grid; grid-template-columns: 1fr 1fr; }
+  .datebox .c { padding: 6px 8px; }
+  .datebox .c + .c { border-left: 1px solid var(--ink); }
+  .datebox .full { border-top: 1px solid var(--ink); padding: 6px 8px; }
+  .datebox small { display: block; font-size: 9px; font-weight: 700; letter-spacing: .04em; }
+  .hl { display: grid; grid-template-columns: 26px 1fr; gap: 4px 10px; align-items: start; margin: 8px 0; font-size: 13px; }
+  .hl .i { font-size: 16px; line-height: 1.2; }
+  .cal2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; font-size: 10px; text-align: center; }
+  .cal span { padding: 4px 0; border-radius: 999px; }
+  .cal .x { color: #b3b8bf; text-decoration: line-through; }
+  .cal .sel { background: var(--navy); color: #fff; }
+  .cal .in { background: #e3e9f3; border-radius: 0; }
+  .cal .h { font-weight: 700; color: var(--muted); }
+  .scores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0; }
+  .scores div { border-right: 1px solid var(--line); padding-right: 8px; font-size: 12px; }
+  .scores div:last-child { border-right: 0; }
+  .rv { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12px; }
+  .avatar { width: 28px; height: 28px; border-radius: 999px; background: var(--fill); display: inline-block; vertical-align: middle; margin-right: 6px; }
+  .gallery { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 110px 110px; gap: 6px; border-radius: 14px; overflow: hidden; position: relative; }
+  .gallery .ph { border-radius: 0; }
+  .gallery .big { grid-row: 1 / 3; }
+  .gallery .all { position: absolute; right: 10px; bottom: 10px; background: #fff; border: 1px solid var(--ink);
+    border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: 600; }
+  .field { border: 1px solid #b7bdc5; border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--muted); margin: 4px 0 10px; }
+  .flabel { font-size: 12px; font-weight: 600; }
+  .section { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .section.done .flabel { color: var(--muted); }
+  .sticky-bottom { border-top: 1px solid var(--line); margin: 12px -16px -16px; padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center; background: #fff; }
+  @media (max-width: 700px) { body { padding: 16px; } .states { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Deskaway wireframes</h1>
+<p class="intro">Airbnb-style layouts for the five screens, desktop (1280 px) and mobile (375 px): photo-first cards without borders, a search pill, filter chips and a floating booking card. Grey boxes are placeholders; blue notes describe behaviour. Colours, spacing and type come from the design tokens.</p>
+
+<!-- ============ 1. SEARCH ============ -->
+<section class="screen">
+  <h2>1. Search: <code>/</code></h2>
+  <p>Search pill for where, when and who; chips for the work filters. Cards show the price per night only, no total. Everything lives in the URL.</p>
+  <div class="row">
+    <div>
+      <div class="label">Desktop</div>
+      <div class="frame desktop">
+        <div class="hdr">
+          <span class="logo">Deskaway</span>
+          <span class="pill"><span class="seg"><small>Where</small>Ghent</span><span class="seg"><small>When</small>2&ndash;16 Nov</span><span class="seg"><small>Who</small>1 guest</span><span class="go">&#9906;</span></span>
+          <span class="nav"><span>&#9825; Favorites (2)</span></span>
+        </div>
+        <div class="chips">
+          <span class="chip on">Wifi 100+ Mbps</span><span class="chip">Desk</span><span class="chip on">Desk + monitor</span><span class="chip">Office</span><span class="chip">Coworking nearby</span>
+          <span class="spacer"></span><span class="chip">&#8645; Sort: Work score</span><span class="chip">&#9881; Filters</span>
+        </div>
+        <div class="muted" style="margin:-6px 0 12px;">8 stays in Ghent</div>
+        <div class="grid4">
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 90</span><span class="heart">&#9825;</span><span class="dots">&#9679; &#9675; &#9675;</span></div>
+            <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 4.5</span></div>
+              <div class="sub">Patershol canal loft</div><div class="sub">250 Mbps &middot; Desk + monitor</div>
+              <div style="margin-top:3px;"><span class="b">&euro;115</span> night</div></div></div>
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 81</span><span class="heart on">&#9829;</span><span class="dots">&#9679; &#9675; &#9675;</span></div>
+            <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 3.7</span></div>
+              <div class="sub">Dok Noord studio</div><div class="sub">120 Mbps &middot; Desk</div>
+              <div style="margin-top:3px;"><span class="b">&euro;75</span> night</div></div></div>
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 74</span><span class="heart">&#9825;</span></div>
+            <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 4.8</span></div>
+              <div class="sub">&hellip;</div><div class="sub">&hellip;</div><div><span class="b">&euro;&hellip;</span> night</div></div></div>
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 70</span><span class="heart">&#9825;</span></div>
+            <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>New</span></div>
+              <div class="sub">&hellip;</div><div class="sub">&hellip;</div><div><span class="b">&euro;&hellip;</span> night</div></div></div>
+        </div>
+        <p class="note">Whole card links to the stay (title is the accessible link name); the heart is a separate button. &ldquo;New&rdquo; replaces the rating when a stay has no reviews. Clicking the pill opens the where/when/who editor.</p>
+        <div class="states">
+          <div class="state"><div class="t">Loading</div>8 grey card skeletons in the same grid; chips stay usable.</div>
+          <div class="state"><div class="t">Empty</div>&ldquo;No stays match all your filters.&rdquo; <span class="btn">Remove wifi filter</span> <span class="btn link">Clear all</span></div>
+          <div class="state"><div class="t">Error</div>&ldquo;We couldn&rsquo;t load stays.&rdquo; <span class="btn">Try again</span><br><span class="muted">Ref: 7f3a&hellip; (request id)</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Mobile</div>
+      <div class="frame mobile">
+        <div class="pill" style="justify-content:space-between;margin-bottom:10px;"><span style="padding:4px 0;"><span class="b">Ghent</span><br><span class="muted">2&ndash;16 Nov &middot; 1 guest</span></span><span class="go">&#9906;</span></div>
+        <div class="chips" style="flex-wrap:nowrap;overflow:hidden;"><span class="chip">&#9881;</span><span class="chip on">Wifi 100+</span><span class="chip on">Desk + monitor</span><span class="chip">Office</span></div>
+        <div class="card"><div class="ph square">photo (swipe)<span class="scoretag">Work score 90</span><span class="heart">&#9825;</span><span class="dots">&#9679; &#9675; &#9675;</span></div>
+          <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 4.5</span></div>
+            <div class="sub">Patershol canal loft &middot; 250 Mbps</div>
+            <div style="margin-top:3px;"><span class="b">&euro;115</span> night</div></div></div>
+        <div class="card" style="margin-top:14px;"><div class="ph square">next card&hellip;</div></div>
+        <p class="note">Chips scroll sideways; &#9881; opens all filters in a full-screen sheet with <b>Show 8 stays</b>. Bottom tab bar: Search &middot; Favorites.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. STAY DETAILS ============ -->
+<section class="screen">
+  <h2>2. Stay details: <code>/stays/:id?checkIn&amp;checkOut&amp;guests</code></h2>
+  <p>Title above an Airbnb photo grid. &ldquo;Work setup&rdquo; is the first section, as highlight rows. The floating booking card explains why dates can&rsquo;t be booked.</p>
+  <div class="row">
+    <div>
+      <div class="label">Desktop</div>
+      <div class="frame desktop">
+        <div class="hdr">
+          <span class="logo">Deskaway</span>
+          <span class="pill"><span class="seg">Ghent</span><span class="seg">2&ndash;16 Nov</span><span class="seg">1 guest</span><span class="go">&#9906;</span></span>
+          <span class="nav"><span>&#9825; Favorites (2)</span></span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <span class="b" style="font-size:20px;">Patershol canal loft</span>
+          <span class="nav"><span class="btn link">&#9825; Save</span></span>
+        </div>
+        <div class="gallery">
+          <div class="ph big">photo</div><div class="ph">photo</div><div class="ph">photo</div><div class="ph">photo</div><div class="ph">photo</div>
+          <span class="all">&#9638; Show all photos</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 290px;gap:36px;margin-top:16px;">
+          <div>
+            <div class="b" style="font-size:16px;">Entire loft in Ghent, Belgium</div>
+            <div class="muted">2 guests &middot; 1 bedroom &middot; &#9733; 4.5 &middot; <u>4 reviews</u></div>
+            <div class="hr"></div>
+            <div class="b">Work setup <span class="scoretag" style="position:static;margin-left:6px;">Work score 90</span></div>
+            <div class="hl">
+              <span class="i">&#128246;</span><span><span class="b">Fast wifi: 250&darr; / 40&uarr; Mbps</span><br><span class="muted">Measured 3 days ago</span></span>
+              <span class="i">&#128421;</span><span><span class="b">Desk with a 27&quot; monitor</span><br><span class="muted">Dedicated workspace by the window</span></span>
+              <span class="i">&#127970;</span><span><span class="b">Coworking 400 m away</span><br><span class="muted">For days you want company</span></span>
+              <span class="i">&#127911;</span><span><span class="b">Video-call ready</span><br><span class="muted">Upload of 20 Mbps or more</span></span>
+            </div>
+            <div class="hr"></div>
+            <div class="muted">Description&hellip; <span class="btn link">Show more</span></div>
+            <div class="hr"></div>
+            <div class="b">14 nights in Ghent</div><div class="muted" style="margin-bottom:8px;">2 Nov 2026 &ndash; 16 Nov 2026</div>
+            <div class="cal2">
+              <div><div class="b" style="text-align:center;font-size:12px;margin-bottom:4px;">November 2026</div><div class="cal">
+                <span class="h">M</span><span class="h">T</span><span class="h">W</span><span class="h">T</span><span class="h">F</span><span class="h">S</span><span class="h">S</span>
+                <span class="sel">2</span><span class="in">3</span><span class="in">4</span><span class="in">5</span><span class="in">6</span><span class="in">7</span><span class="in">8</span>
+                <span class="in">9</span><span class="in">10</span><span class="in">11</span><span class="in">12</span><span class="in">13</span><span class="in">14</span><span class="in">15</span>
+                <span class="sel">16</span><span class="x">17</span><span class="x">18</span><span class="x">19</span><span>20</span><span>21</span><span>22</span></div></div>
+              <div><div class="b" style="text-align:center;font-size:12px;margin-bottom:4px;">December 2026</div><div class="cal">
+                <span class="h">M</span><span class="h">T</span><span class="h">W</span><span class="h">T</span><span class="h">F</span><span class="h">S</span><span class="h">S</span>
+                <span>&nbsp;</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                <span>7</span><span>8</span><span class="x">9</span><span class="x">10</span><span class="x">11</span><span>12</span><span>13</span></div></div>
+            </div>
+            <p class="note">Two months side by side; booked nights struck through. Days are buttons with full labels; arrow keys move, Enter picks check-in then check-out. <b>Clear dates</b> link below.</p>
+            <div class="hr"></div>
+            <div class="b" style="font-size:16px;">&#9733; 4.5 &middot; 4 reviews</div>
+            <div class="scores"><div>Wifi<br><span class="b">4.5</span></div><div>Workspace<br><span class="b">4.7</span></div><div>Noise<br><span class="b">4.0</span></div></div>
+            <div class="rv">
+              <div><span class="avatar"></span><span class="b">Anna</span> <span class="muted">&middot; stayed 14 nights</span><div class="muted" style="margin-top:4px;">&ldquo;Fast fibre, perfect for calls&hellip;&rdquo;</div></div>
+              <div><span class="avatar"></span><span class="b">Tom</span> <span class="muted">&middot; stayed 7 nights</span><div class="muted" style="margin-top:4px;">&ldquo;Great desk, a bit noisy on Friday&hellip;&rdquo;</div></div>
+            </div>
+            <div style="margin-top:10px;"><span class="btn">Show all 4 reviews</span> <span class="btn">Write a review</span></div>
+            <p class="note">&ldquo;Write a review&rdquo; opens a dialog: name, overall + wifi/workspace/noise, text. On success the dialog closes, the new review shows first and &ldquo;Review added&rdquo; is announced.</p>
+          </div>
+          <div style="align-self:start;">
+            <div class="float">
+              <div><span class="b" style="font-size:16px;">&euro;115</span> night</div>
+              <div class="datebox"><div class="r"><div class="c"><small>CHECK-IN</small>2/11/2026</div><div class="c"><small>CHECK-OUT</small>16/11/2026</div></div><div class="full"><small>GUESTS</small>1 guest &#9662;</div></div>
+              <span class="btn primary block">Reserve</span>
+              <div class="muted" style="text-align:center;margin:6px 0;">You won&rsquo;t be charged (demo)</div>
+              <div class="line"><span><u>&euro;115 &times; 14 nights</u></span><span>&euro;1,610</span></div>
+              <div class="line"><span><u>Cleaning fee</u></span><span>&euro;45</span></div>
+              <div class="line"><span><u>City tax (1 guest)</u></span><span>&euro;42</span></div>
+              <div class="line total"><span>Total</span><span>&euro;1,697</span></div>
+            </div>
+            <p class="note">Sticky while scrolling. Not bookable &rarr; Reserve disabled + reason under the dates, e.g. &ldquo;Minimum stay is 3 nights&rdquo;. No dates yet &rarr; button reads <b>Check availability</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Mobile</div>
+      <div class="frame mobile" style="padding-top:0;">
+        <div class="ph square" style="margin:0 -16px;border-radius:0;">photo (swipe)<span class="dots">1 / 5</span>
+          <span style="position:absolute;top:10px;left:10px;background:#fff;border-radius:999px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&larr;</span>
+          <span style="position:absolute;top:10px;right:10px;background:#fff;border-radius:999px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#9825;</span></div>
+        <div class="b" style="margin-top:12px;font-size:16px;">Patershol canal loft</div>
+        <div class="muted">Entire loft &middot; Ghent, Belgium &middot; &#9733; 4.5 (4)</div>
+        <div class="hr"></div>
+        <div class="b">Work setup &middot; score 90</div>
+        <div class="hl"><span class="i">&#128246;</span><span>250&darr; / 40&uarr; Mbps</span><span class="i">&#128421;</span><span>Desk + monitor</span><span class="i">&#127970;</span><span>Coworking 400 m</span></div>
+        <div class="hr"></div>
+        <div class="muted">Calendar (one month, swipe) &middot; Reviews</div>
+        <div class="sticky-bottom"><div><span class="b">&euro;115</span> night<br><span class="muted"><u>2&ndash;16 Nov</u></span></div><span class="btn primary">Reserve</span></div>
+        <p class="note">Fixed bottom bar; tapping the dates opens the calendar, tapping the price opens the breakdown.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. CHECKOUT ============ -->
+<section class="screen">
+  <h2>3. Checkout: <code>/checkout/:id?checkIn&amp;checkOut&amp;guests</code></h2>
+  <p>Like Airbnb&rsquo;s &ldquo;Confirm and pay&rdquo;: three steps stacked on one page. Done steps collapse with an Edit link; the summary card stays on the right. No card data goes to the API.</p>
+  <div class="row">
+    <div>
+      <div class="label">Desktop (step 2 open)</div>
+      <div class="frame desktop">
+        <div class="hdr"><span class="logo">Deskaway</span><span></span><span></span></div>
+        <div class="b" style="font-size:20px;margin-bottom:10px;">&larr; Confirm and book</div>
+        <div style="display:grid;grid-template-columns:1fr 300px;gap:36px;">
+          <div>
+            <div class="section done"><div style="display:flex;justify-content:space-between;"><span class="flabel">1. Your trip</span><span class="btn link">Edit</span></div>
+              <div class="muted">2&ndash;16 Nov &middot; 1 guest &middot; Note: &ldquo;I take calls 9&ndash;17&rdquo;</div></div>
+            <div class="section"><div class="flabel" style="font-size:14px;color:var(--ink);">2. Your details</div>
+              <div class="flabel" style="margin-top:8px;">Full name</div><div class="field">&nbsp;</div>
+              <div class="flabel">Email</div><div class="field">&nbsp;</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div><div class="flabel">Company <span class="muted">(optional)</span></div><div class="field">&nbsp;</div></div>
+                <div><div class="flabel">VAT number <span class="muted">(optional)</span></div><div class="field">&nbsp;</div></div>
+              </div>
+              <span class="btn primary">Continue</span></div>
+            <div class="section" style="border-bottom:0;"><span class="flabel" style="color:var(--muted);">3. Payment</span></div>
+            <p class="note">Step 3: mock card fields with &ldquo;Demo only, no real payment&rdquo; and a full-width <b>Confirm booking</b> button (disabled while sending). Focus moves to the open step&rsquo;s heading.</p>
+            <div class="state"><div class="t">Booking fails (409 / 422)</div>Error box above step 3 with the server&rsquo;s message and request id; focus moves to it.</div>
+          </div>
+          <div class="float" style="align-self:start;">
+            <div style="display:grid;grid-template-columns:90px 1fr;gap:10px;"><div class="ph" style="height:70px;">photo</div>
+              <div><div class="b">Patershol canal loft</div><div class="muted">Entire loft &middot; &#9733; 4.5</div></div></div>
+            <div class="hr"></div>
+            <div class="b" style="margin-bottom:4px;">Price details</div>
+            <div class="line"><span>&euro;115 &times; 14 nights</span><span>&euro;1,610</span></div>
+            <div class="line"><span>Cleaning fee</span><span>&euro;45</span></div>
+            <div class="line"><span>City tax</span><span>&euro;42</span></div>
+            <div class="line total"><span>Total (EUR)</span><span>&euro;1,697</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Mobile</div>
+      <div class="frame mobile">
+        <div class="b" style="margin-bottom:8px;">&larr; Confirm and book</div>
+        <div class="float" style="padding:10px;margin-bottom:10px;"><div class="b">Patershol canal loft</div><div class="muted">2&ndash;16 Nov &middot; 1 guest</div><div class="line total" style="margin-top:4px;"><span>Total</span><span>&euro;1,697 &#9662;</span></div></div>
+        <div class="section done"><div style="display:flex;justify-content:space-between;"><span class="flabel">1. Your trip</span><span class="btn link">Edit</span></div></div>
+        <div class="section"><div class="flabel" style="color:var(--ink);">2. Your details</div>
+          <div class="flabel" style="margin-top:6px;">Full name</div><div class="field">&nbsp;</div>
+          <div class="flabel">Email</div><div class="field">&nbsp;</div></div>
+        <div class="section" style="border-bottom:0;"><span class="flabel" style="color:var(--muted);">3. Payment</span></div>
+        <div class="sticky-bottom"><span class="btn primary block" style="width:100%;">Continue</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. CONFIRMATION ============ -->
+<section class="screen">
+  <h2>4. Confirmation: <code>/bookings/:id</code></h2>
+  <p>A friendly &ldquo;you&rsquo;re going&rdquo; page with the photo first. Shareable; it reloads the booking from the API.</p>
+  <div class="row">
+    <div>
+      <div class="label">Desktop</div>
+      <div class="frame desktop">
+        <div class="hdr"><span class="logo">Deskaway</span><span></span><span class="nav"><span>&#9825; Favorites (2)</span></span></div>
+        <div style="max-width:460px;margin:8px auto;">
+          <div class="ph" style="height:160px;">photo</div>
+          <div class="b" style="font-size:20px;margin-top:12px;">You&rsquo;re going to Ghent!</div>
+          <div class="muted">Booking reference <span class="b" style="color:var(--ink)">DSK-7F3K2</span> &middot; confirmation sent to your email (demo)</div>
+          <div class="hr"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:13px;">
+            <div><span class="muted">Check-in</span><br><span class="b">Mon 2 Nov 2026</span></div>
+            <div><span class="muted">Check-out</span><br><span class="b">Mon 16 Nov 2026</span></div>
+            <div><span class="muted">Stay</span><br><span class="b">Patershol canal loft</span></div>
+            <div><span class="muted">Guests</span><br><span class="b">1</span></div>
+          </div>
+          <div class="hr"></div>
+          <div class="line"><span>&euro;115 &times; 14 nights</span><span>&euro;1,610</span></div>
+          <div class="line"><span>Cleaning fee</span><span>&euro;45</span></div>
+          <div class="line"><span>City tax</span><span>&euro;42</span></div>
+          <div class="line total"><span>Total paid (demo)</span><span>&euro;1,697</span></div>
+          <div style="margin-top:12px;"><span class="btn">Back to search</span></div>
+        </div>
+        <div class="states" style="grid-template-columns:1fr 1fr;">
+          <div class="state"><div class="t">Loading</div>Skeleton of the photo and details.</div>
+          <div class="state"><div class="t">Not found</div>&ldquo;We can&rsquo;t find this booking.&rdquo; <span class="btn">Back to search</span></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Mobile</div>
+      <div class="frame mobile">
+        <div class="ph" style="height:140px;">photo</div>
+        <div class="b" style="font-size:17px;margin-top:10px;">You&rsquo;re going to Ghent!</div>
+        <div class="muted">DSK-7F3K2</div>
+        <div class="hr"></div>
+        <div class="muted">Mon 2 Nov &rarr; Mon 16 Nov &middot; 1 guest</div>
+        <div class="line total"><span>Total</span><span>&euro;1,697</span></div>
+        <span class="btn block" style="margin-top:10px;">Back to search</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. FAVORITES ============ -->
+<section class="screen">
+  <h2>5. Favorites: <code>/favorites</code></h2>
+  <p>Saved in the browser (localStorage). Same photo-first cards as search.</p>
+  <div class="row">
+    <div>
+      <div class="label">Desktop</div>
+      <div class="frame desktop">
+        <div class="hdr"><span class="logo">Deskaway</span><span></span><span class="nav"><span class="b" style="color:var(--navy)">&#9829; Favorites (2)</span></span></div>
+        <div class="b" style="font-size:20px;margin-bottom:12px;">Favorites</div>
+        <div class="grid4">
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 81</span><span class="heart on">&#9829;</span></div>
+            <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 3.7</span></div><div class="sub">Dok Noord studio</div><div><span class="b">&euro;75</span> night</div></div></div>
+          <div class="card"><div class="ph square">photo<span class="scoretag">Work score 88</span><span class="heart on">&#9829;</span></div>
+            <div class="meta"><div class="top"><span>Utrecht, Netherlands</span><span>&#9733; 4.6</span></div><div class="sub">&hellip;</div><div><span class="b">&euro;&hellip;</span> night</div></div></div>
+        </div>
+        <div class="states" style="grid-template-columns:1fr 1fr;">
+          <div class="state"><div class="t">Empty</div>&ldquo;No favorites yet. Tap the &#9825; on a stay to save it here.&rdquo; <span class="btn">Start exploring</span></div>
+          <div class="state"><div class="t">Unsave</div>Card disappears; screen reader hears &ldquo;Removed from favorites&rdquo;.</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="label">Mobile</div>
+      <div class="frame mobile">
+        <div class="b" style="font-size:18px;margin-bottom:10px;">Favorites</div>
+        <div class="card"><div class="ph square">photo<span class="scoretag">Work score 81</span><span class="heart on">&#9829;</span></div>
+          <div class="meta"><div class="top"><span>Ghent, Belgium</span><span>&#9733; 3.7</span></div><div><span class="b">&euro;75</span> night</div></div></div>
+        <div class="sticky-bottom" style="justify-content:space-around;"><span class="muted">&#9906; Search</span><span class="b" style="color:var(--navy)">&#9829; Favorites</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
