@@ -1,0 +1,110 @@
+[
+  {
+    "id": "booking-01",
+    "stayId": "amsterdam-jordaan-apartment",
+    "checkInInDays": 0,
+    "nights": 10,
+    "guests": 2,
+    "guestName": "Noor Jansen",
+    "guestEmail": "noor.jansen@example.com"
+  },
+  {
+    "id": "booking-02",
+    "stayId": "amsterdam-jordaan-apartment",
+    "checkInInDays": 10,
+    "nights": 10,
+    "guests": 1,
+    "guestName": "Lucas Peeters",
+    "guestEmail": "lucas.peeters@example.com"
+  },
+  {
+    "id": "booking-03",
+    "stayId": "amsterdam-jordaan-apartment",
+    "checkInInDays": 20,
+    "nights": 10,
+    "guests": 2,
+    "guestName": "Emma Dubois",
+    "guestEmail": "emma.dubois@example.com"
+  },
+  {
+    "id": "booking-04",
+    "stayId": "ghent-patershol-loft",
+    "checkInInDays": 5,
+    "nights": 4,
+    "guests": 1,
+    "guestName": "Liam de Vries",
+    "guestEmail": "liam.de.vries@example.com"
+  },
+  {
+    "id": "booking-05",
+    "stayId": "ghent-patershol-loft",
+    "checkInInDays": 21,
+    "nights": 7,
+    "guests": 2,
+    "guestName": "Olivia Maes",
+    "guestEmail": "olivia.maes@example.com"
+  },
+  {
+    "id": "booking-06",
+    "stayId": "antwerp-zurenborg-apartment",
+    "checkInInDays": 9,
+    "nights": 14,
+    "guests": 2,
+    "guestName": "Milan Bakker",
+    "guestEmail": "milan.bakker@example.com"
+  },
+  {
+    "id": "booking-07",
+    "stayId": "brussels-ixelles-garden-flat",
+    "checkInInDays": 12,
+    "nights": 5,
+    "guests": 1,
+    "guestName": "Julie Lambert",
+    "guestEmail": "julie.lambert@example.com"
+  },
+  {
+    "id": "booking-08",
+    "stayId": "bruges-canal-house",
+    "checkInInDays": 30,
+    "nights": 7,
+    "guests": 4,
+    "guestName": "Daan Visser",
+    "guestEmail": "daan.visser@example.com"
+  },
+  {
+    "id": "booking-09",
+    "stayId": "amsterdam-noord-loft",
+    "checkInInDays": 6,
+    "nights": 10,
+    "guests": 2,
+    "guestName": "Sara Weber",
+    "guestEmail": "sara.weber@example.com"
+  },
+  {
+    "id": "booking-10",
+    "stayId": "utrecht-wittevrouwen-townhouse",
+    "checkInInDays": 40,
+    "nights": 21,
+    "guests": 3,
+    "guestName": "Arthur Claes",
+    "guestEmail": "arthur.claes@example.com"
+  },
+  {
+    "id": "booking-11",
+    "stayId": "luxembourg-grund-apartment",
+    "checkInInDays": 55,
+    "nights": 5,
+    "guests": 1,
+    "guestName": "Zoë Smit",
+    "guestEmail": "zoe.smit@example.com"
+  },
+  {
+    "id": "booking-12",
+    "stayId": "la-roche-ourthe-chalet",
+    "checkInInDays": 14,
+    "nights": 7,
+    "guests": 5,
+    "guestName": "Louis Schmit",
+    "guestEmail": "louis.schmit@example.com"
+  }
+]

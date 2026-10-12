@@ -1,0 +1,108 @@
+# Manual API checks (VS Code REST Client). Run against `npm run dev`.
+# Dates are relative to today, matching the seed offsets for ghent-patershol-loft
+# (booked: today+5..+9 and today+21..+28), so they stay free.
+# Bookings live in memory: restart the dev server before rerunning, or the
+# first booking returns 409 because it already exists.
+
+@baseUrl = http://localhost:3000/api
+@stay = ghent-patershol-loft
+
+@quoteIn = {{$localDatetime "YYYY-MM-DD" 11 d}}
+@quoteOut = {{$localDatetime "YYYY-MM-DD" 14 d}}
+@bookIn = {{$localDatetime "YYYY-MM-DD" 29 d}}
+@bookOut = {{$localDatetime "YYYY-MM-DD" 33 d}}
+@priceIn = {{$localDatetime "YYYY-MM-DD" 39 d}}
+@priceOut = {{$localDatetime "YYYY-MM-DD" 43 d}}
+@pastIn = {{$localDatetime "YYYY-MM-DD" -2 d}}
+@pastOut = {{$localDatetime "YYYY-MM-DD" 2 d}}
+
+### Taken nights for the stay (to pick free dates)
+GET {{baseUrl}}/stays/{{stay}}/availability?from={{$localDatetime "YYYY-MM-DD"}}&to={{$localDatetime "YYYY-MM-DD" 60 d}}
+
+### 1. Ghent stays with at least 100 Mbps download -> 200, only Ghent, wifiDownloadMbps >= 100
+GET {{baseUrl}}/stays?city=Ghent&minWifi=100
+
+### 2. Quote 3 free nights for 2 guests -> lines nights, cleaningFee, cityTax (2 x 3 x 300 = 1800); lines add up to total
+GET {{baseUrl}}/stays/{{stay}}/quote?checkIn={{quoteIn}}&checkOut={{quoteOut}}&guests=2
+
+### 3a. Book free dates -> 201
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "stayId": "{{stay}}",
+  "checkIn": "{{bookIn}}",
+  "checkOut": "{{bookOut}}",
+  "guests": 2,
+  "guestName": "Ada Lovelace",
+  "guestEmail": "ada@example.com"
+}
+
+### 3b. Same dates again -> 409 DATES_TAKEN
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "stayId": "{{stay}}",
+  "checkIn": "{{bookIn}}",
+  "checkOut": "{{bookOut}}",
+  "guests": 2,
+  "guestName": "Ada Lovelace",
+  "guestEmail": "ada@example.com"
+}
+
+### 4a. Client sends its own prices -> 201, total is the server's (4 x 11500 + 4500 + 1 x 4 x 300 = 51700)
+# @name overpriced
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "stayId": "{{stay}}",
+  "checkIn": "{{priceIn}}",
+  "checkOut": "{{priceOut}}",
+  "guests": 1,
+  "guestName": "Grace Hopper",
+  "guestEmail": "grace@example.com",
+  "total": 1,
+  "pricePerNight": 1,
+  "lines": [{ "kind": "nights", "amount": 1 }]
+}
+
+### 4b. Stored booking has the server's total, not 1
+GET {{baseUrl}}/bookings/{{overpriced.response.body.$.id}}
+
+### Check-in in the past (quote) -> 422 CHECK_IN_IN_PAST
+GET {{baseUrl}}/stays/{{stay}}/quote?checkIn={{pastIn}}&checkOut={{pastOut}}&guests=1
+
+### Check-in in the past (booking) -> 422 CHECK_IN_IN_PAST
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "stayId": "{{stay}}",
+  "checkIn": "{{pastIn}}",
+  "checkOut": "{{pastOut}}",
+  "guests": 1,
+  "guestName": "Ada Lovelace",
+  "guestEmail": "ada@example.com"
+}
+
+### 0 guests (quote) -> 400 VALIDATION_ERROR
+GET {{baseUrl}}/stays/{{stay}}/quote?checkIn={{quoteIn}}&checkOut={{quoteOut}}&guests=0
+
+### 0 guests (booking) -> 400 VALIDATION_ERROR
+POST {{baseUrl}}/bookings
+Content-Type: application/json
+
+{
+  "stayId": "{{stay}}",
+  "checkIn": "{{bookIn}}",
+  "checkOut": "{{bookOut}}",
+  "guests": 0,
+  "guestName": "Ada Lovelace",
+  "guestEmail": "ada@example.com"
+}
+
+### 5. Request id: sent id comes back in the x-request-id header and in the server log
+GET {{baseUrl}}/health
+X-Request-Id: manual-check-1

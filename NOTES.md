@@ -58,6 +58,37 @@ Pricing, availability and work score must be computed the same way everywhere, a
 - Why: one URL and no CORS; the in-memory data needs a single long-running process, so the API cannot be split into serverless functions or several instances.
 - Tradeoff: the free tier sleeps when idle, so the first request after a pause is slow.
 
+### 2026-10-12: API contract
+| Method + path | Success | Errors |
+|---|---|---|
+| GET /api/stays?city&checkIn&checkOut&guests&minWifi&workspace&sort&page | 200 { items, total, page }; items include workScore, and a quote when dates are given | 400 |
+| GET /api/stays/:id | 200 stay + workScore + review summary | 404 |
+| GET /api/stays/:id/quote?checkIn&checkOut&guests | 200 Quote (available false + reason when not bookable) | 400, 404, 422 check-in in the past |
+| GET /api/stays/:id/availability?from&to | 200 { blocked: string[] } (taken nights) | 400, 404 |
+| GET /api/stays/:id/reviews?sort=recent|rating | 200 Review[] | 404 |
+| POST /api/stays/:id/reviews | 201 Review | 400, 404, 422 moderation, 429 |
+| POST /api/bookings | 201 Booking (server re-quotes) | 400, 404, 409 dates taken, 422 rule broken, 429 |
+| GET /api/bookings/:id | 200 Booking | 404 |
+
+409 = conflict with current state (someone else booked). 422 = request breaks a rule (too few nights).
+
+Error codes (`error.code`):
+- 400 VALIDATION_ERROR (details: the Zod issues)
+- 404 NOT_FOUND
+- 409 DATES_TAKEN
+- 422 CHECK_IN_IN_PAST, INVALID_DATES, MIN_NIGHTS (details.minNights), MAX_GUESTS (details.maxGuests), REVIEW_REJECTED
+- 429 RATE_LIMITED (POST routes: 10 per minute per IP)
+- 500 INTERNAL_ERROR (stack only in the log), SIMULATED_FAILURE (dev only)
+
+Dev only (NODE_ENV !== production): `?_delay=ms` (max 10 s) and `?_fail=1` on any GET, to demo loading and error states.
+Every response has an `x-request-id` header (taken from the request or generated); the same id is in every log line for that request.
+
+### 2026-10-12: API details
+- Added fastify-type-provider-zod (typed routes from the shared Zod schemas) and @fastify/rate-limit. Their peers (@fastify/swagger, openapi-types) come along; Swagger isn't used.
+- POST /bookings: guest name + email required, company / VAT / note optional. No card data, payment is mocked in the UI (in production Stripe would handle the card, the API only gets a token).
+- Search with dates hides stays that are booked or too small. Stays below the minimum stay are shown with the reason, so the user can change dates.
+- Seed bookings are full bookings (fake names, @example.com emails), priced with quote() at startup. Same shape as real bookings.
+
 
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.
@@ -75,7 +106,7 @@ Pricing, availability and work score must be computed the same way everywhere, a
 - Price lines: { kind, amount }. Labels are done in the UI.
 - Bad input (like 0 guests) is caught by Zod → 400. quote() only checks business rules.
 - Shared tests run in Europe/Amsterdam time, otherwise the clock-change test is useless in CI (UTC).
-- Past check-in → reason code CHECK_IN_IN_PAST (422).
+- Past check-in → reason code CHECK_IN_IN_PAST (422). "Today" is the date in Europe/Brussels, not UTC.
 - API order: past check-in → quote rules → overlap (409).
 - isAvailable only checks dates; guests are checked in quote.
 - Work score details: wifi linear 0-100 Mbps (capped), workspace office 25 / desk_monitor 20 / desk 15, noise from average review rating (no reviews = half points), coworking linear 0-5 km (none nearby = 0).
@@ -85,9 +116,10 @@ Pricing, availability and work score must be computed the same way everywhere, a
 ## Assumptions
 - Prices are in EUR.
 - No accounts; the "verified stay" label on reviews is mocked.
-- City tax is a flat amount per city (Amsterdam really uses a percentage).
+- City tax is a flat amount per city (Amsterdam really uses a percentage). The seed's per-person amounts are approximate, not researched; Amsterdam is seeded at a flat €7.50.
+- Seed bookings are stored as day offsets and turned into dates at startup, so the demo always has upcoming bookings. The Jordaan apartment is fully booked for the next 30 days on purpose.
 - Payment is mocked; any 16 digits are accepted.
-- Wifi speeds are seed data, not real measurements.
+- Wifi speeds are seed data, not real measurements. The seed stores the measurement date as days ago, turned into `wifiMeasuredAt` at startup, so it always looks recent.
 
 ## Cut (and why)
 - Long-stay (weekly/monthly) discounts: kept pricing simple; would add next.
