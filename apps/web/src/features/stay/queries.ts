@@ -2,8 +2,12 @@ import type { QuoteQuery } from "@deskaway/shared";
 import { keepPreviousData, skipToken, useQuery } from "@tanstack/react-query";
 import { getAvailability, getQuote, getStay } from "../../lib/api";
 
-export function useStay(id: string) {
-  return useQuery({ queryKey: ["stay", id], queryFn: () => getStay(id) });
+// No query until the id is known, e.g. while a booking is still loading.
+export function useStay(id: string | undefined) {
+  return useQuery({
+    queryKey: ["stay", id],
+    queryFn: id ? () => getStay(id) : skipToken,
+  });
 }
 
 // No query until both dates are known.

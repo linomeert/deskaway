@@ -1,6 +1,9 @@
 import {
   type Availability,
   AvailabilitySchema,
+  type Booking,
+  type BookingCreate,
+  BookingSchema,
   ErrorResponseSchema,
   type Quote,
   type QuoteQuery,
@@ -187,4 +190,13 @@ export function getReviews(id: string, sort: ReviewSort): Promise<Review[]> {
 
 export function postReview(id: string, review: ReviewCreate): Promise<Review> {
   return apiPost(`${stayPath(id)}/reviews`, review, ReviewSchema);
+}
+
+// Prices are never sent: the server quotes the booking itself.
+export function postBooking(booking: BookingCreate): Promise<Booking> {
+  return apiPost("/api/bookings", booking, BookingSchema);
+}
+
+export function getBooking(id: string): Promise<Booking> {
+  return apiGet(`/api/bookings/${encodeURIComponent(id)}`, BookingSchema);
 }

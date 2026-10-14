@@ -1,4 +1,4 @@
-import type { PriceLine, Quote, StayDetail } from "@deskaway/shared";
+import type { Quote, StayDetail } from "@deskaway/shared";
 import { useId } from "react";
 import { Link } from "react-router";
 import { Button } from "../../components/Button";
@@ -8,6 +8,7 @@ import { cx } from "../../lib/cx";
 import { formatDateRange, formatGuests, formatPrice } from "../../lib/format";
 import { formatDay } from "./calendar";
 import { focusCalendar } from "./focusCalendar";
+import { PriceBreakdown } from "./PriceBreakdown";
 import { useQuote } from "./queries";
 import { checkoutHref, type StayParams, useStayParams } from "./useStayParams";
 
@@ -28,14 +29,15 @@ function reasonText(quote: UnavailableQuote): string {
   }
 }
 
-type BookingState =
+export type BookingState =
   | { status: "no-dates" }
   | { status: "loading" }
   | { status: "bookable"; quote: AvailableQuote }
   | { status: "unavailable"; reason: string }
   | { status: "error"; error: Error; retry: () => void; retrying: boolean };
 
-function useBookingState(stay: StayDetail) {
+// Also used by the checkout, where the same URL params hold the trip.
+export function useBookingState(stay: StayDetail) {
   const params = useStayParams();
   const { checkIn, checkOut, guests } = params;
   const query = checkIn && checkOut ? { checkIn, checkOut, guests } : undefined;
@@ -110,22 +112,6 @@ function BookingAction({
           Reserve
         </Button>
       );
-  }
-}
-
-function lineLabel(
-  line: PriceLine,
-  stay: StayDetail,
-  nights: number,
-  guests: number,
-) {
-  switch (line.kind) {
-    case "nights":
-      return `${formatPrice(stay.pricePerNight)} × ${String(nights)} ${nights === 1 ? "night" : "nights"}`;
-    case "cleaningFee":
-      return "Cleaning fee";
-    case "cityTax":
-      return `City tax (${formatGuests(guests)})`;
   }
 }
 
@@ -239,20 +225,13 @@ export function PricePanel({ stay }: { stay: StayDetail }) {
         </p>
 
         {state.status === "bookable" && (
-          <dl className="flex flex-col gap-2">
-            {state.quote.lines.map((line) => (
-              <div key={line.kind} className="flex justify-between gap-4">
-                <dt>
-                  {lineLabel(line, stay, state.quote.nights, params.guests)}
-                </dt>
-                <dd className="tabular-nums">{formatPrice(line.amount)}</dd>
-              </div>
-            ))}
-            <div className="flex justify-between gap-4 border-t border-border pt-3 font-semibold">
-              <dt>Total</dt>
-              <dd className="tabular-nums">{formatPrice(state.quote.total)}</dd>
-            </div>
-          </dl>
+          <PriceBreakdown
+            lines={state.quote.lines}
+            total={state.quote.total}
+            nights={state.quote.nights}
+            guests={params.guests}
+            pricePerNight={stay.pricePerNight}
+          />
         )}
       </div>
 
