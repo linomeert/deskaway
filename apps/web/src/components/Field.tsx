@@ -66,6 +66,20 @@ export function Input({ className, ...props }: ComponentProps<"input">) {
   );
 }
 
+export function Textarea({ className, ...props }: ComponentProps<"textarea">) {
+  return (
+    <textarea
+      className={cx(
+        "min-h-32 w-full rounded-md border border-muted bg-surface px-3 py-2 text-base text-ink placeholder:text-muted",
+        "aria-invalid:border-2 aria-invalid:border-danger",
+        "disabled:cursor-not-allowed disabled:bg-surface-alt disabled:text-muted",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
 export function Select({ className, ...props }: ComponentProps<"select">) {
   return (
     <select

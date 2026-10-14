@@ -6,6 +6,7 @@ import { StarIcon } from "../../components/icons";
 import { Skeleton } from "../../components/Skeleton";
 import { ApiError } from "../../lib/api";
 import { COUNTRY_NAMES, formatGuests } from "../../lib/format";
+import { Reviews } from "../reviews/Reviews";
 import { AvailabilityCalendar } from "./AvailabilityCalendar";
 import { PhotoGrid } from "./PhotoGrid";
 import { PricePanel } from "./PricePanel";
@@ -78,6 +79,9 @@ function StayDetails({ stay }: { stay: StayDetail }) {
 
           <hr className="border-border" />
           <AvailabilityCalendar stay={stay} />
+
+          <hr className="border-border" />
+          <Reviews stay={stay} />
         </div>
 
         <aside aria-label="Booking" className="lg:col-span-1">

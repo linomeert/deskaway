@@ -5,6 +5,10 @@ import {
   type Quote,
   type QuoteQuery,
   QuoteSchema,
+  type Review,
+  type ReviewCreate,
+  ReviewSchema,
+  type ReviewSort,
   type StayDetail,
   StayDetailSchema,
   type StayPage,
@@ -64,19 +68,19 @@ async function readJson(response: Response): Promise<unknown> {
   }
 }
 
-export async function apiGet<T>(
+// Network failures, the API error shape and unexpected bodies all become ApiError.
+async function send<T>(
   path: string,
   schema: Parser<T>,
-  params: URLSearchParams = new URLSearchParams(),
+  params: URLSearchParams,
+  init: RequestInit,
 ): Promise<T> {
   addDevParams(params);
   const search = params.size > 0 ? `?${params.toString()}` : "";
 
   let response: Response;
   try {
-    response = await fetch(`${path}${search}`, {
-      headers: { accept: "application/json" },
-    });
+    response = await fetch(`${path}${search}`, init);
   } catch {
     throw new ApiError(
       0,
@@ -114,6 +118,31 @@ export async function apiGet<T>(
   return parsed.data;
 }
 
+export function apiGet<T>(
+  path: string,
+  schema: Parser<T>,
+  params: URLSearchParams = new URLSearchParams(),
+): Promise<T> {
+  return send(path, schema, params, {
+    headers: { accept: "application/json" },
+  });
+}
+
+export function apiPost<T>(
+  path: string,
+  body: unknown,
+  schema: Parser<T>,
+): Promise<T> {
+  return send(path, schema, new URLSearchParams(), {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+}
+
 export function getStays(query: StaySearchQuery): Promise<StayPage> {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries<string | number | undefined>(
@@ -149,4 +178,13 @@ export function getAvailability(
 ): Promise<Availability> {
   const params = new URLSearchParams({ from, to });
   return apiGet(`${stayPath(id)}/availability`, AvailabilitySchema, params);
+}
+
+export function getReviews(id: string, sort: ReviewSort): Promise<Review[]> {
+  const params = new URLSearchParams({ sort });
+  return apiGet(`${stayPath(id)}/reviews`, ReviewSchema.array(), params);
+}
+
+export function postReview(id: string, review: ReviewCreate): Promise<Review> {
+  return apiPost(`${stayPath(id)}/reviews`, review, ReviewSchema);
 }
