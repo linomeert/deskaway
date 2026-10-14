@@ -59,3 +59,10 @@ export function workScoreBand(score: number): WorkScoreBand {
   if (score >= 60) return "good";
   return "fair";
 }
+
+// Upload speed needed for a stable HD video call.
+export const VIDEO_CALL_MIN_UPLOAD_MBPS = 20;
+
+export function isVideoCallReady(uploadMbps: number): boolean {
+  return uploadMbps >= VIDEO_CALL_MIN_UPLOAD_MBPS;
+}

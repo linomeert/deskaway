@@ -29,3 +29,5 @@
 | 10-12 | API | Claude offered a card number field in the booking | Said no: card data never goes to my API, payment stays mocked in the UI |
 | 10-12 | API | Claude asked how search handles unbookable stays and what seed bookings look like | Hide booked/too small, show min-night reason; full seed bookings with fake data |
 | 10-12 | API checks | Let Claude run the manual API checks and show real output; no code changes allowed | Checked each result myself; kept api.http to rerun them |
+| 10-12 | Stay page | Plan let the browser decide overlap (/availability + hasBlockedNight) because /quote didn't check it | Moved the overlap check to /quote (DATES_TAKEN): the API decides, the web only displays |
+| 10-12 | Stay page | Calendar plan had full keyboard support incl. Home/End/PageUp/PageDown | Trimmed to arrows + Enter/Space for the timebox |

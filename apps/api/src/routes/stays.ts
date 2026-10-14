@@ -8,8 +8,10 @@ import {
   StayPageSchema,
   StaySearchQuerySchema,
   blockedNights,
+  isAvailable,
   isBookableFrom,
   quote,
+  type Quote,
 } from "@deskaway/shared";
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
@@ -68,7 +70,15 @@ export function registerStayRoutes(
           "Check-in cannot be in the past",
         );
       }
-      return quote(stay, checkIn, checkOut, guests);
+      const price = quote(stay, checkIn, checkOut, guests);
+      if (!price.available) return price;
+      // Overlap is checked last, after the quote rules (NOTES.md: API order).
+      const bookings = (await repo.getBookings(stay.id)) ?? [];
+      if (!isAvailable(bookings, checkIn, checkOut)) {
+        const taken: Quote = { available: false, reason: "DATES_TAKEN" };
+        return taken;
+      }
+      return price;
     },
   );
 
