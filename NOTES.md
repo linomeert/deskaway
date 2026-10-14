@@ -97,6 +97,12 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Logo inspiration via ChatGPT & fineturning via VectorCraft (Opensource Adobe Illustrator)
 - Generated wireframes in Claude Code in AirBnb stype in order to save time. Components + style guide generated based on Logo and wireframes in order to respect the timebox.
 
+### 2026-10-14: Adding a review
+- Decision: React Hook Form + `zodResolver(ReviewCreateSchema)`, with the same schema the API validates against. After a successful POST, the reviews and stay queries are invalidated. The dialog closes once the refetch is done, focus moves to the new review and "Review added" is announced in a status region.
+- Why: one schema for client and server, and keyboard and screen-reader users don't lose their place.
+- Tradeoff: the dialog stays open (button spinner) a little longer, until the refetch finishes.
+
+
 ## Domain rules
 - Dates are ISO YYYY-MM-DD strings. Check-out is exclusive: bookings 1-5 Nov and 5-8 Nov do not overlap.
 - Check-in cannot be in the past. `today` is passed in as a parameter, so functions stay pure.
@@ -127,6 +133,9 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Seed bookings are stored as day offsets and turned into dates at startup, so the demo always has upcoming bookings. The Jordaan apartment is fully booked for the next 30 days on purpose.
 - Payment is mocked; any 16 digits are accepted.
 - Wifi speeds are seed data, not real measurements. The seed stores the measurement date as days ago, turned into `wifiMeasuredAt` at startup, so it always looks recent.
+- Anyone can post a review; there's no check that the reviewer booked the stay. The only abuse protection is the rate limit (10 POSTs per minute per IP).
+- Review dates are shown as month + year in UTC, like other calendar dates.
+
 
 ## Cut (and why)
 - Long-stay (weekly/monthly) discounts: kept pricing simple; would add next.
@@ -135,5 +144,7 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Map view: needs a map library and API key; low value for the demo.
 - Playwright e2e: the booking path is covered by API integration and component tests; one happy-path e2e test would come next.
 - Accounts, real payments, holding dates during checkout, NL/FR/EN, host tools: out of scope for the timebox.
+- Editing or deleting reviews, and hover preview on the star inputs: not needed for the core flow.
+
 
 ## Open questions
