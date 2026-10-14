@@ -7,7 +7,7 @@ import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
 import { ChevronLeftIcon } from "../../components/icons";
 import { Skeleton } from "../../components/Skeleton";
-import { ApiError } from "../../lib/api";
+import { ApiError, isNotFound } from "../../lib/api";
 import { useBookingState } from "../stay/PricePanel";
 import { useStay } from "../stay/queries";
 import { CheckoutStep } from "./CheckoutStep";
@@ -212,7 +212,7 @@ export function CheckoutPage() {
 
   let content;
   if (isPending) content = <LoadingCheckout />;
-  else if (isError && error instanceof ApiError && error.status === 404) {
+  else if (isError && isNotFound(error)) {
     content = (
       <EmptyState
         title="We can't find this stay."

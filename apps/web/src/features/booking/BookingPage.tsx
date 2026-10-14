@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
 import { Skeleton } from "../../components/Skeleton";
-import { ApiError } from "../../lib/api";
+import { ApiError, isNotFound } from "../../lib/api";
 import { formatLongDate } from "../../lib/format";
 import { useStay } from "../stay/queries";
 import { PriceBreakdown } from "../stay/PriceBreakdown";
@@ -107,11 +107,7 @@ export function BookingPage() {
   const stay = useStay(booking.data?.stayId);
 
   let content;
-  if (
-    booking.isError &&
-    booking.error instanceof ApiError &&
-    booking.error.status === 404
-  ) {
+  if (booking.isError && isNotFound(booking.error)) {
     content = (
       <>
         <h1 className="sr-only">Booking not found</h1>

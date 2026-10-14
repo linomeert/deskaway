@@ -1,6 +1,6 @@
 import type { StayDetail, StaySummary } from "@deskaway/shared";
 import { useQueries } from "@tanstack/react-query";
-import { ApiError, getStay } from "../../lib/api";
+import { getStay } from "../../lib/api";
 
 // One query per saved id. Same key as useStay, so the stay page reuses the cache.
 export function useFavoriteStays(ids: readonly string[]) {
@@ -15,11 +15,6 @@ export function useFavoriteStays(ids: readonly string[]) {
     const result = results[index];
     return result ? [{ id, result }] : [];
   });
-}
-
-// The stay was removed: only then is a saved id safe to forget.
-export function isNotFound(error: unknown): boolean {
-  return error instanceof ApiError && error.status === 404;
 }
 
 // StayCard takes a search result; the details endpoint has the same data
