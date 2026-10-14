@@ -11,8 +11,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 text-sm text-muted sm:px-6 lg:px-10">
-          <span>© 2026 DeskAway - Work from anywhere. Actually.</span><br />
-          <span><button type="button" className="underline">Privacy</button> - <button type="button" className="underline">Terms</button></span>
+        <span>© 2026 DeskAway - Work from anywhere. Actually.</span>
         {/* Decorative: the brand name is already in the text next to it. */}
         <img src="/footerlogo.svg" alt="" className="h-12 w-auto" />
       </div>
