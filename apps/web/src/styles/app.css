@@ -48,6 +48,32 @@
   /* Only for floating elements: booking card, search pill, dialog. */
   --shadow-*: initial;
   --shadow-float: 0 2px 8px rgb(0 0 0 / 0.08), 0 8px 24px rgb(0 0 0 / 0.06);
+
+  /*
+   * Save feedback on the Favorites nav (decorative; the role="status" text is
+   * the real feedback). Pair the pulse with motion-reduce:animate-none so
+   * reduced motion keeps only the colour flash.
+   */
+  --animate-save-pulse: save-pulse 400ms ease-out;
+  --animate-save-flash: save-flash 1s ease-out;
+
+  @keyframes save-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.25);
+    }
+  }
+
+  /* No end frame: the colour fades back to the element's own. */
+  @keyframes save-flash {
+    0%,
+    50% {
+      color: var(--color-accent-ink);
+    }
+  }
 }
 
 @layer base {

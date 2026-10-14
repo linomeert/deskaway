@@ -1,6 +1,7 @@
 import { Link, type RouteObject } from "react-router";
 import { BookingPage } from "../features/booking/BookingPage";
 import { CheckoutPage } from "../features/checkout/CheckoutPage";
+import { FavoritesPage } from "../features/favorites/FavoritesPage";
 import { SearchPage } from "../features/search/SearchPage";
 import { StayPage } from "../features/stay/StayPage";
 import { Root } from "./Root";
@@ -47,6 +48,10 @@ export const routes: RouteObject[] = [
       {
         path: "bookings/:id",
         element: <BookingPage />,
+      },
+      {
+        path: "favorites",
+        element: <FavoritesPage />,
       },
       ...devRoutes,
       { path: "*", element: <NotFoundPage /> },

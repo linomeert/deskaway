@@ -68,3 +68,12 @@ export function toggleFavorite(id: string): void {
   writeStorage(ids);
   emit();
 }
+
+// For ids whose stay no longer exists. No-op when the id is not saved.
+export function removeFavorite(id: string): void {
+  const current = getSnapshot();
+  if (!current.includes(id)) return;
+  ids = current.filter((item) => item !== id);
+  writeStorage(ids);
+  emit();
+}

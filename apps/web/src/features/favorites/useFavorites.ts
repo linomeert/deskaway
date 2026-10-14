@@ -1,5 +1,10 @@
 import { useSyncExternalStore } from "react";
-import { getSnapshot, subscribe, toggleFavorite } from "./favoritesStore";
+import {
+  getSnapshot,
+  removeFavorite,
+  subscribe,
+  toggleFavorite,
+} from "./favoritesStore";
 
 export function useFavorites() {
   const ids = useSyncExternalStore(subscribe, getSnapshot);
@@ -9,5 +14,6 @@ export function useFavorites() {
     count: ids.length,
     isFavorite: (id: string) => ids.includes(id),
     toggle: toggleFavorite,
+    remove: removeFavorite,
   };
 }
