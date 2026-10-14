@@ -49,6 +49,11 @@ export class ApiError extends Error {
   }
 }
 
+// The resource doesn't exist (HTTP 404).
+export function isNotFound(error: unknown): boolean {
+  return error instanceof ApiError && error.status === 404;
+}
+
 // Dev only: pass the API's demo switches (?_fail=1, ?_delay=ms) through from
 // the page URL, so loading and error states can be tried in the browser.
 const DEV_PARAMS = ["_fail", "_delay"];

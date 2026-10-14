@@ -2,15 +2,14 @@ import type { StayPage, StaySearchQuery } from "@deskaway/shared";
 import { Button } from "../../components/Button";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
-import { Skeleton } from "../../components/Skeleton";
 import { ApiError } from "../../lib/api";
 import { cx } from "../../lib/cx";
 import { FilterBar } from "./FilterBar";
 import { StayCard } from "./StayCard";
+import { STAY_GRID, StayCardSkeletonGrid } from "./StayCardSkeletonGrid";
 import { useStaySearchParams } from "./useStaySearchParams";
 import { useStays } from "./useStays";
 
-const GRID = "grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4";
 const SKELETON_COUNT = 8;
 
 function placeName(query: StaySearchQuery): string {
@@ -21,22 +20,6 @@ function resultsLine(data: StayPage | undefined, place: string): string {
   if (!data) return "";
   if (data.total === 0) return `No stays in ${place}`;
   return `${String(data.total)} ${data.total === 1 ? "stay" : "stays"} in ${place}`;
-}
-
-function LoadingGrid() {
-  return (
-    <div aria-busy="true" className={GRID}>
-      <span className="sr-only">Loading stays…</span>
-      {Array.from({ length: SKELETON_COUNT }, (_, index) => (
-        <div key={index} className="flex flex-col gap-2">
-          <Skeleton className="aspect-square rounded-lg" />
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-4 w-1/4" />
-        </div>
-      ))}
-    </div>
-  );
 }
 
 interface PaginationProps {
@@ -93,7 +76,9 @@ export function SearchPage() {
 
   let content;
   if (isPending) {
-    content = <LoadingGrid />;
+    content = (
+      <StayCardSkeletonGrid count={SKELETON_COUNT} label="Loading stays…" />
+    );
   } else if (isError) {
     content = (
       <ErrorState
@@ -145,7 +130,7 @@ export function SearchPage() {
         <ul
           aria-busy={isPlaceholderData || undefined}
           className={cx(
-            GRID,
+            STAY_GRID,
             "transition-opacity",
             isPlaceholderData && "opacity-60",
           )}

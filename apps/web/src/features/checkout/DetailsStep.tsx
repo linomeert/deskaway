@@ -15,6 +15,13 @@ function tooLongOr(
   return otherwise;
 }
 
+// The line shown once the details step is done.
+export function detailsSummary(guestName: unknown, guestEmail: unknown) {
+  return [guestName, guestEmail]
+    .filter((value) => typeof value === "string" && value !== "")
+    .join(" · ");
+}
+
 interface DetailsStepProps {
   register: UseFormRegister<CheckoutInput>;
   errors: FieldErrors<CheckoutInput>;

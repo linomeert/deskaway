@@ -4,7 +4,7 @@ import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
 import { StarIcon } from "../../components/icons";
 import { Skeleton } from "../../components/Skeleton";
-import { ApiError } from "../../lib/api";
+import { ApiError, isNotFound } from "../../lib/api";
 import { COUNTRY_NAMES, formatGuests } from "../../lib/format";
 import { Reviews } from "../reviews/Reviews";
 import { AvailabilityCalendar } from "./AvailabilityCalendar";
@@ -99,7 +99,7 @@ export function StayPage() {
   if (isPending) return <LoadingStay />;
 
   if (isError) {
-    if (error instanceof ApiError && error.status === 404) {
+    if (isNotFound(error)) {
       return (
         <>
           <h1 className="sr-only">Stay not found</h1>

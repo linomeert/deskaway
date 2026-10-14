@@ -2,35 +2,21 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorState } from "../../components/ErrorState";
-import { Skeleton } from "../../components/Skeleton";
-import { ApiError } from "../../lib/api";
+import { ApiError, isNotFound } from "../../lib/api";
 import { StayCard } from "../search/StayCard";
-import { isNotFound, toSummary, useFavoriteStays } from "./queries";
+import {
+  STAY_GRID,
+  StayCardSkeletonGrid,
+} from "../search/StayCardSkeletonGrid";
+import { toSummary, useFavoriteStays } from "./queries";
 import { useFavorites } from "./useFavorites";
 
-const GRID = "grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4";
 const MAX_SKELETONS = 8;
 // Favorites have no dates; the stay page asks for them.
 const NO_DATES = { guests: 1 };
 
 const START_EXPLORING =
   "inline-flex h-11 items-center justify-center rounded-md border border-muted bg-surface px-5 font-semibold text-ink hover:bg-surface-alt";
-
-function LoadingGrid({ count }: { count: number }) {
-  return (
-    <div aria-busy="true" className={GRID}>
-      <span className="sr-only">Loading favorites…</span>
-      {Array.from({ length: Math.min(count, MAX_SKELETONS) }, (_, index) => (
-        <div key={index} className="flex flex-col gap-2">
-          <Skeleton className="aspect-square rounded-lg" />
-          <Skeleton className="h-4 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-4 w-1/4" />
-        </div>
-      ))}
-    </div>
-  );
-}
 
 function NoFavorites() {
   return (
@@ -87,7 +73,12 @@ export function FavoritesPage() {
   if (ids.length === 0) {
     content = <NoFavorites />;
   } else if (entries.some((entry) => entry.result.isPending)) {
-    content = <LoadingGrid count={ids.length} />;
+    content = (
+      <StayCardSkeletonGrid
+        count={Math.min(ids.length, MAX_SKELETONS)}
+        label="Loading favorites…"
+      />
+    );
   } else if (failed.length > 0) {
     const [first] = failed;
     const error = first?.result.error;
@@ -110,7 +101,7 @@ export function FavoritesPage() {
     content = <NoFavorites />;
   } else {
     content = (
-      <ul className={GRID}>
+      <ul className={STAY_GRID}>
         {stays.map((stay) => (
           <li key={stay.id}>
             <StayCard stay={toSummary(stay)} query={NO_DATES} />
