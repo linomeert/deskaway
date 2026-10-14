@@ -8,10 +8,9 @@ import { ErrorState } from "../../components/ErrorState";
 import { ChevronLeftIcon } from "../../components/icons";
 import { Skeleton } from "../../components/Skeleton";
 import { ApiError } from "../../lib/api";
-import { formatDateRange, formatGuests } from "../../lib/format";
 import { useBookingState } from "../stay/PricePanel";
 import { useStay } from "../stay/queries";
-import { CheckoutStep, type StepStatus } from "./CheckoutStep";
+import { CheckoutStep } from "./CheckoutStep";
 import { CheckoutSummary } from "./CheckoutSummary";
 import {
   type CheckoutInput,
@@ -19,34 +18,21 @@ import {
   type CheckoutValues,
   DEMO_CARD,
   EMPTY_CHECKOUT,
-  STEP_FIELDS,
 } from "./checkoutSchema";
-import { DetailsStep } from "./DetailsStep";
+import { DetailsStep, detailsSummary } from "./DetailsStep";
 import { PaymentStep } from "./PaymentStep";
 import { useCreateBooking } from "./queries";
-import { TripStep } from "./TripStep";
-
-type Step = 1 | 2 | 3;
-
-function statusOf(step: Step, current: Step): StepStatus {
-  if (step < current) return "done";
-  return step === current ? "open" : "next";
-}
+import { TripStep, tripSummary } from "./TripStep";
+import { useCheckoutSteps } from "./useCheckoutSteps";
 
 function Checkout({ stay }: { stay: StayDetail }) {
   const navigate = useNavigate();
   const { state, params } = useBookingState(stay);
   const createBooking = useCreateBooking(stay.id);
 
-  const [step, setStep] = useState<Step>(1);
   const [showTripProblem, setShowTripProblem] = useState(false);
-  const tripHeading = useRef<HTMLHeadingElement>(null);
-  const detailsHeading = useRef<HTMLHeadingElement>(null);
-  const paymentHeading = useRef<HTMLHeadingElement>(null);
   const checkInRef = useRef<HTMLInputElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
-  // Set by goTo, so the first render (and StrictMode's re-run) doesn't steal focus.
-  const focusHeading = useRef(false);
 
   const {
     register,
@@ -65,12 +51,11 @@ function Checkout({ stay }: { stay: StayDetail }) {
     name: ["note", "guestName", "guestEmail"],
   });
 
-  useEffect(() => {
-    if (!focusHeading.current) return;
-    focusHeading.current = false;
-    const heading =
-      step === 1 ? tripHeading : step === 2 ? detailsHeading : paymentHeading;
-    heading.current?.focus();
+  const { statusOf, headingRefs, goNext, edit } = useCheckoutSteps({
+    trigger,
+    onStepChange: () => {
+      createBooking.reset();
+    },
   });
 
   // The server's message gets focus, so screen readers hear what went wrong.
@@ -78,26 +63,15 @@ function Checkout({ stay }: { stay: StayDetail }) {
     if (createBooking.error) errorRef.current?.focus();
   }, [createBooking.error]);
 
-  const goTo = (next: Step) => {
-    focusHeading.current = true;
-    createBooking.reset();
-    setStep(next);
-  };
-
-  const continueFromTrip = async () => {
-    const noteValid = await trigger(STEP_FIELDS.trip, { shouldFocus: true });
-    if (!noteValid) return;
+  // The note is valid by now; the dates still have to be bookable.
+  const tripIsBookable = () => {
     if (state.status !== "bookable") {
       setShowTripProblem(true);
       checkInRef.current?.focus();
-      return;
+      return false;
     }
     setShowTripProblem(false);
-    goTo(2);
-  };
-
-  const continueFromDetails = async () => {
-    if (await trigger(STEP_FIELDS.details, { shouldFocus: true })) goTo(3);
+    return true;
   };
 
   const fillDemoCard = () => {
@@ -112,7 +86,7 @@ function Checkout({ stay }: { stay: StayDetail }) {
   const submitBooking = (values: CheckoutValues) => {
     const { checkIn, checkOut, guests } = params;
     if (!checkIn || !checkOut) {
-      goTo(1);
+      edit(1);
       return;
     }
     const booking: BookingCreate = {
@@ -133,22 +107,6 @@ function Checkout({ stay }: { stay: StayDetail }) {
     });
   };
 
-  const tripSummary =
-    params.checkIn && params.checkOut
-      ? [
-          formatDateRange(params.checkIn, params.checkOut),
-          formatGuests(params.guests),
-          typeof note === "string" && note.trim()
-            ? `Note: “${note.trim()}”`
-            : "",
-        ]
-          .filter(Boolean)
-          .join(" · ")
-      : undefined;
-  const detailsSummary = [guestName, guestEmail]
-    .filter((value) => typeof value === "string" && value !== "")
-    .join(" · ");
-
   return (
     <div className="grid gap-10 lg:grid-cols-3">
       <aside
@@ -168,11 +126,11 @@ function Checkout({ stay }: { stay: StayDetail }) {
         <CheckoutStep
           number={1}
           title="Your trip"
-          status={statusOf(1, step)}
-          headingRef={tripHeading}
-          summary={tripSummary}
+          status={statusOf(1)}
+          headingRef={headingRefs[1]}
+          summary={tripSummary(params, note)}
           onEdit={() => {
-            goTo(1);
+            edit(1);
           }}
         >
           <TripStep
@@ -184,7 +142,7 @@ function Checkout({ stay }: { stay: StayDetail }) {
             showProblem={showTripProblem}
             checkInRef={checkInRef}
             onContinue={() => {
-              void continueFromTrip();
+              void goNext(tripIsBookable);
             }}
           />
         </CheckoutStep>
@@ -192,18 +150,18 @@ function Checkout({ stay }: { stay: StayDetail }) {
         <CheckoutStep
           number={2}
           title="Your details"
-          status={statusOf(2, step)}
-          headingRef={detailsHeading}
-          summary={detailsSummary}
+          status={statusOf(2)}
+          headingRef={headingRefs[2]}
+          summary={detailsSummary(guestName, guestEmail)}
           onEdit={() => {
-            goTo(2);
+            edit(2);
           }}
         >
           <DetailsStep
             register={register}
             errors={errors}
             onContinue={() => {
-              void continueFromDetails();
+              void goNext();
             }}
           />
         </CheckoutStep>
@@ -211,10 +169,10 @@ function Checkout({ stay }: { stay: StayDetail }) {
         <CheckoutStep
           number={3}
           title="Payment"
-          status={statusOf(3, step)}
-          headingRef={paymentHeading}
+          status={statusOf(3)}
+          headingRef={headingRefs[3]}
           onEdit={() => {
-            goTo(3);
+            edit(3);
           }}
         >
           <PaymentStep

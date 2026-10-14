@@ -4,7 +4,7 @@ import type { UseFormRegister } from "react-hook-form";
 import { Button } from "../../components/Button";
 import { Field, Input, Select, Textarea } from "../../components/Field";
 import { AlertIcon } from "../../components/icons";
-import { formatGuests } from "../../lib/format";
+import { formatDateRange, formatGuests } from "../../lib/format";
 import type { BookingState } from "../stay/PricePanel";
 import type { useStayParams } from "../stay/useStayParams";
 import { type CheckoutInput, MAX_LENGTHS } from "./checkoutSchema";
@@ -27,6 +27,21 @@ export function tripProblem(state: BookingState): string | undefined {
     case "bookable":
       return undefined;
   }
+}
+
+// The line shown once the trip step is done.
+export function tripSummary(
+  params: ReturnType<typeof useStayParams>,
+  note: unknown,
+): string | undefined {
+  if (!params.checkIn || !params.checkOut) return undefined;
+  return [
+    formatDateRange(params.checkIn, params.checkOut),
+    formatGuests(params.guests),
+    typeof note === "string" && note.trim() ? `Note: “${note.trim()}”` : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
 }
 
 interface TripStepProps {
