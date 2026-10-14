@@ -145,6 +145,7 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Playwright e2e: the booking path is covered by API integration and component tests; one happy-path e2e test would come next.
 - Accounts, real payments, holding dates during checkout, NL/FR/EN, host tools: out of scope for the timebox.
 - Editing or deleting reviews, and hover preview on the star inputs: not needed for the core flow.
+- Accessibility automation limited to one axe check (search page) plus jsx-a11y lint rules; more axe checks per screen would come next.
 
 
 ## Open questions

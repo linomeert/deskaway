@@ -37,3 +37,4 @@
 | 10-14 | Checkout | Plan had a mock card form with normal autofill and no tests | Added autocomplete="off" + "Fill demo card" so no real card gets autofilled |
 | 10-14 | Favorites | Plan only skipped deleted stays, so the header count would include them | Asked to prune 404 ids from the store so count and cards match |
 | 10-14 | Refactor | Generated calendar (361 lines) and checkout (305 lines) were single large components | Had Claude split them by responsibility with a no-behaviour-change rule; checked tests + manual keyboard flow |
+| 10-14 | Component tests | Claude set up MSW + typed fixtures and wrote 4 search tests (incl. axe) and the checkout 409 test | Reviewed every test, ran lint/typecheck/tests myself (41 web tests green) |
