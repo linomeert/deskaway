@@ -34,4 +34,5 @@
 | 10-14 | Reviews | My brief asked for "stayed N nights", but reviews have no nights data; Claude offered two options that change the schema | Dropped it for now , noted under Cut |
 | 10-14 | Reviews | Claude focused the new review with `document.getElementById`. I asked why not a ref; Claude agreed a ref is more idiomatic, but warned that a callback ref would run before the Dialog's cleanup returns focus to "Write a review" and lose to it | Switched to a ref object focused in a `useEffect`, which runs after the cleanup; dropped the unused `reviewElementId` and `id`. [Checked focus in the browser: result] |
 | 10-14 | Reviews | Sorting looked broken: Claude's "pin the new review first" stayed on after changing the sort, so with 3 reviews both orders looked the same. Claude confirmed with curl that the API sorted correctly | Clearing the pin when the sort changes; [checked in the browser] |
+| 10-14 | Checkout | Plan had a mock card form with normal autofill and no tests | Added autocomplete="off" + "Fill demo card" so no real card gets autofilled |
 

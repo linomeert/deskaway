@@ -39,6 +39,19 @@ export function formatDateRange(checkIn: string, checkOut: string): string {
   return dayMonth.formatRange(utcDate(checkIn), utcDate(checkOut));
 }
 
+const longDay = new Intl.DateTimeFormat("en-GB", {
+  weekday: "short",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+// "Mon 2 Nov 2026". en-GB adds a comma after the weekday; drop it.
+export function formatLongDate(isoDate: string): string {
+  return longDay.format(utcDate(isoDate)).replace(",", "");
+}
+
 export function formatGuests(guests: number): string {
   return guests === 1 ? "1 guest" : `${String(guests)} guests`;
 }

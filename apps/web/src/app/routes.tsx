@@ -1,7 +1,8 @@
 import { Link, type RouteObject } from "react-router";
+import { BookingPage } from "../features/booking/BookingPage";
+import { CheckoutPage } from "../features/checkout/CheckoutPage";
 import { SearchPage } from "../features/search/SearchPage";
 import { StayPage } from "../features/stay/StayPage";
-import { PlaceholderPage } from "./PlaceholderPage";
 import { Root } from "./Root";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
 
@@ -41,11 +42,11 @@ export const routes: RouteObject[] = [
       },
       {
         path: "checkout/:id",
-        element: <PlaceholderPage title="Confirm and book" />,
+        element: <CheckoutPage />,
       },
       {
         path: "bookings/:id",
-        element: <PlaceholderPage title="Your booking" />,
+        element: <BookingPage />,
       },
       ...devRoutes,
       { path: "*", element: <NotFoundPage /> },
