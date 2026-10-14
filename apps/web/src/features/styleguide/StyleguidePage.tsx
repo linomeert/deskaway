@@ -13,6 +13,8 @@ import { SearchPill } from "../../components/SearchPill";
 import { Skeleton } from "../../components/Skeleton";
 import { WifiSpeed } from "../../components/WifiSpeed";
 import { WorkScoreBadge } from "../../components/WorkScoreBadge";
+import { FlashingCount, PulsingHeart } from "../favorites/FavoritesNav";
+import { useSavePulse } from "../favorites/useSavePulse";
 
 // Dev-only page (see routes.tsx) showing every token and component state.
 
@@ -259,6 +261,40 @@ function DialogSection() {
   );
 }
 
+function SavePulseSection() {
+  const [count, setCount] = useState(2);
+  const pulse = useSavePulse(count);
+
+  return (
+    <Section title="Save pulse">
+      <Row label="Heart scales 1 → 1.25 → 1 (400 ms), count flashes accent. Reduced motion: colour only (DevTools › Rendering).">
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          Simulate save
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setCount(Math.max(0, count - 1));
+          }}
+        >
+          Simulate remove (no pulse)
+        </Button>
+        <span className="inline-flex items-center gap-2 px-3 py-2 font-semibold">
+          <PulsingHeart pulse={pulse} className="size-5" />
+          <span>
+            Favorites <FlashingCount pulse={pulse} count={count} />
+          </span>
+        </span>
+      </Row>
+    </Section>
+  );
+}
+
 export function StyleguidePage() {
   return (
     <div className="flex flex-col">
@@ -406,6 +442,7 @@ export function StyleguidePage() {
       </Section>
 
       <DialogSection />
+      <SavePulseSection />
     </div>
   );
 }
