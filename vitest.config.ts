@@ -11,6 +11,8 @@ export default defineConfig({
           environment: "jsdom",
           setupFiles: ["./src/test/setup.ts"],
           include: ["src/**/*.test.{ts,tsx}"],
+          // Full user flows (checkout, axe) can pass 5s on a cold, busy machine or CI runner.
+          testTimeout: 15_000,
         },
       },
       {
