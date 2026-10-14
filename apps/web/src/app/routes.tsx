@@ -1,5 +1,6 @@
 import { Link, type RouteObject } from "react-router";
 import { SearchPage } from "../features/search/SearchPage";
+import { StayPage } from "../features/stay/StayPage";
 import { PlaceholderPage } from "./PlaceholderPage";
 import { Root } from "./Root";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
@@ -36,7 +37,7 @@ export const routes: RouteObject[] = [
       { index: true, element: <SearchPage /> },
       {
         path: "stays/:id",
-        element: <PlaceholderPage title="Stay details" />,
+        element: <StayPage />,
       },
       {
         path: "checkout/:id",

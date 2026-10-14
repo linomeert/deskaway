@@ -22,7 +22,6 @@ Workation booking app (Booking.com-like) for a frontend take-home. Benelux stays
 
 ## Design
 - Screen layouts (desktop + mobile, Airbnb style) are in docs/wireframes.html. Follow its structure and the blue notes for each screen; colours and spacing come from the design tokens, not from that file.
-
 ## Commands
 - npm run dev | lint | typecheck | test | build
 - Before saying a task is done: run lint, typecheck and test, and report the results.

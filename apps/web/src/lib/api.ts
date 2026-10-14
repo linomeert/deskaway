@@ -1,5 +1,12 @@
 import {
+  type Availability,
+  AvailabilitySchema,
   ErrorResponseSchema,
+  type Quote,
+  type QuoteQuery,
+  QuoteSchema,
+  type StayDetail,
+  StayDetailSchema,
   type StayPage,
   StayPageSchema,
   type StaySearchQuery,
@@ -115,4 +122,31 @@ export function getStays(query: StaySearchQuery): Promise<StayPage> {
     if (value !== undefined) params.set(key, String(value));
   }
   return apiGet("/api/stays", StayPageSchema, params);
+}
+
+function stayPath(id: string): string {
+  return `/api/stays/${encodeURIComponent(id)}`;
+}
+
+export function getStay(id: string): Promise<StayDetail> {
+  return apiGet(stayPath(id), StayDetailSchema);
+}
+
+export function getQuote(id: string, query: QuoteQuery): Promise<Quote> {
+  const params = new URLSearchParams({
+    checkIn: query.checkIn,
+    checkOut: query.checkOut,
+    guests: String(query.guests),
+  });
+  return apiGet(`${stayPath(id)}/quote`, QuoteSchema, params);
+}
+
+// Blocked nights in [from, to).
+export function getAvailability(
+  id: string,
+  from: string,
+  to: string,
+): Promise<Availability> {
+  const params = new URLSearchParams({ from, to });
+  return apiGet(`${stayPath(id)}/availability`, AvailabilitySchema, params);
 }

@@ -5,8 +5,10 @@ import { HeaderSearch } from "../features/search/HeaderSearch";
 export function Footer() {
   return (
     <footer className="border-t border-border">
-      <div className="mx-auto max-w-7xl px-4 py-6 text-sm text-muted sm:px-6 lg:px-10">
-        Deskaway v{import.meta.env.VITE_APP_VERSION}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-6 text-sm text-muted sm:px-6 lg:px-10">
+        <span>Deskaway v{import.meta.env.VITE_APP_VERSION}</span>
+        {/* Decorative: the brand name is already in the text next to it. */}
+        <img src="/footerlogo.svg" alt="" className="h-12 w-auto" />
       </div>
     </footer>
   );

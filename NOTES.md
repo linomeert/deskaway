@@ -63,7 +63,7 @@ Pricing, availability and work score must be computed the same way everywhere, a
 |---|---|---|
 | GET /api/stays?city&checkIn&checkOut&guests&minWifi&workspace&sort&page | 200 { items, total, page }; items include workScore, and a quote when dates are given | 400 |
 | GET /api/stays/:id | 200 stay + workScore + review summary | 404 |
-| GET /api/stays/:id/quote?checkIn&checkOut&guests | 200 Quote (available false + reason when not bookable) | 400, 404, 422 check-in in the past |
+| GET /api/stays/:id/quote?checkIn&checkOut&guests | 200 Quote (available false + reason when not bookable, incl. DATES_TAKEN) | 400, 404, 422 check-in in the past |
 | GET /api/stays/:id/availability?from&to | 200 { blocked: string[] } (taken nights) | 400, 404 |
 | GET /api/stays/:id/reviews?sort=recent|rating | 200 Review[] | 404 |
 | POST /api/stays/:id/reviews | 201 Review | 400, 404, 422 moderation, 429 |
@@ -88,6 +88,11 @@ Every response has an `x-request-id` header (taken from the request or generated
 - POST /bookings: guest name + email required, company / VAT / note optional. No card data, payment is mocked in the UI (in production Stripe would handle the card, the API only gets a token).
 - Search with dates hides stays that are booked or too small. Stays below the minimum stay are shown with the reason, so the user can change dates.
 - Seed bookings are full bookings (fake names, @example.com emails), priced with quote() at startup. Same shape as real bookings.
+### 2026-10-12: The server decides overlap in quotes
+- Decision: GET /quote also checks existing bookings and returns `available: false`, reason `DATES_TAKEN`. The booking card shows only what the quote says; the shared `hasBlockedNight` is used only by the calendar to limit which check-out days can be picked.
+- Why: one place decides whether dates can be booked. Without it, dates in a URL that span booked nights would show "Reserve" and only fail at checkout with a 409.
+- Tradeoff: /quote now reads bookings too, so it can be wrong the moment after someone else books. POST /bookings still re-checks and returns 409.
+
 ### 2026-10-12: Logo & Design
 - Logo inspiration via ChatGPT & fineturning via VectorCraft (Opensource Adobe Illustrator)
 - Generated wireframes in Claude Code in AirBnb stype in order to save time. Components + style guide generated based on Logo and wireframes in order to respect the timebox.
@@ -109,7 +114,7 @@ Every response has an `x-request-id` header (taken from the request or generated
 - Bad input (like 0 guests) is caught by Zod → 400. quote() only checks business rules.
 - Shared tests run in Europe/Amsterdam time, otherwise the clock-change test is useless in CI (UTC).
 - Past check-in → reason code CHECK_IN_IN_PAST (422). "Today" is the date in Europe/Brussels, not UTC.
-- API order: past check-in → quote rules → overlap (409).
+- GET /quote order: past check-in (422) → quote rules → overlap (`available: false`, reason DATES_TAKEN). POST /bookings uses the same order but answers overlap with 409 DATES_TAKEN.
 - isAvailable only checks dates; guests are checked in quote.
 - Work score details: wifi linear 0-100 Mbps (capped), workspace office 25 / desk_monitor 20 / desk 15, noise from average review rating (no reviews = half points), coworking linear 0-5 km (none nearby = 0).
 - nightsBetween uses UTC midnight, so clock changes don't affect the count.

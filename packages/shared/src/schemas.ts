@@ -144,6 +144,11 @@ export const QuoteSchema = z.union([
     reason: z.literal("MAX_GUESTS"),
     maxGuests: z.number().int(),
   }),
+  // Set by the API, not by quote(): the range overlaps an existing booking.
+  z.object({
+    available: z.literal(false),
+    reason: z.literal("DATES_TAKEN"),
+  }),
 ]);
 
 export type Quote = z.infer<typeof QuoteSchema>;

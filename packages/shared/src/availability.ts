@@ -41,3 +41,13 @@ export function blockedNights(
   }
   return blocked;
 }
+
+// True if any night in [checkIn, checkOut) is in the blocked list. A blocked
+// night on the check-out date is fine: guests leave that morning.
+export function hasBlockedNight(
+  blocked: readonly string[],
+  checkIn: string,
+  checkOut: string,
+): boolean {
+  return blocked.some((night) => night >= checkIn && night < checkOut);
+}
