@@ -3,7 +3,7 @@
 Book stays in the Benelux where you can actually work.
 
 - Live: https://deskaway-h0fv.onrender.com/ (free tier: the first load after a pause can take up to a minute)
-- Recording: TODO(me)
+- Recording: https://www.loom.com/share/9c5fbfe213f4404e8d232eb83ec410fc
 
 ![Deskaway search page on a laptop and a phone: stays in the Benelux with work score, wifi speed and price per night](docs/screenshot.png)
 
